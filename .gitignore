@@ -1,0 +1,8 @@
+node_modules/
+**/source/output/
+**/source/out/
+out/
+frames/
+*.log
+.DS_Store
+Thumbs.db

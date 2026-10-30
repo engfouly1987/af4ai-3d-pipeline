@@ -1,0 +1,42 @@
+// Reference-specific features: broadened hotel end pavilions and rooftop terraces.
+begin();for(const side of [-1,1]){
+ const cx=side*62;
+ for(let level=0;level<3;level++){
+  const y=.4+level*3.6;box(cx,y,-15,32,.16,12);
+  for(const x of [-14.5,-8.7,-2.9,2.9,8.7,14.5]){box(cx+x,y,-21,.3,3.4,.4,'white');}
+  for(const x of [-11.6,-5.8,0,5.8,11.6]){detailedWindow(cx+x,y+.5,-20.7,4.55,2.6,true);arch(cx+x,y+.16,-21,5.3,3.15,.35);}
+  box(cx,y+3.34,-21,32,.18,.5,'white');box(cx,y,-21,32,.15,.5,'stone');
+  for(const dx of [-16,16]){box(cx+dx,y,-15,.18,3.35,12,'white');for(const z of [-18,-13])box(cx+dx*1.007,y+.7,z,.1,2.1,2.6,'glass');}
+ }
+ box(cx,11.2,-15,32,.2,12,'white');terraceRail(cx,11.4,-21,32);raisedPergola(cx,-17,29,6,11.4,13.8);
+ // Staggered shade structures along the wing roof, instead of repeated large domes.
+ for(const [i,z]of [5,24,43,62].entries()){
+  const axis=cx-side*7.5*Math.sin(Math.PI*(z+11.75)/90);raisedPergola(axis-side*5,z,7,6,11.25,13.35);
+  if(i%2===0){box(axis+side*5,11.25,z,5,.5,4,'white');box(axis+side*5,11.75,z,4.6,.15,3.6,'stone');}
+ }
+}
+finish('HotelEndPavilions');node('HOTEL_BROAD_ENDS_AND_SHADED_ROOF_TERRACES','HotelEndPavilions',[0,0,0],'architecture-detail');
+// Barrel vault: true curved roof with a solid arched gable at either end.
+function barrelVault(x,y,z,w,d,rise){
+ const pos=[],ind=[],n=30;for(let j=0;j<=n;j++){const a=j/n*Math.PI;for(const zz of [-d/2,d/2])pos.push(x-w/2*Math.cos(a),y+rise*Math.sin(a),z+zz);if(j<n){let k=j*2;ind.push(k,k+1,k+2,k+1,k+3,k+2);}}
+ const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(pos,3));g.setIndex(ind);g.computeVertexNormals();add(g,'white');
+ for(const zz of [-d/2,d/2]){const p=[x,y,z+zz],a=[];for(let j=0;j<=n;j++){const t=j/n*Math.PI;a.push(x-w/2*Math.cos(t),y+rise*Math.sin(t),z+zz);}const gg=new T.BufferGeometry();gg.setAttribute('position',new T.Float32BufferAttribute([...p,...a],3));const ii=[];for(let j=1;j<=n;j++)ii.push(...(zz<0?[0,j+1,j]:[0,j,j+1]));gg.setIndex(ii);gg.computeVertexNormals();add(gg,'white');}
+}
+begin();for(const side of [-1,1])for(let row=0;row<3;row++){
+ const x=side*(22+row%2*11),z=84+row*14,h=row===2?7.6:5.2;
+ box(x,.3,z,9,h,12,'white');barrelVault(x,h+.3,z,9,12,3);
+ for(const dx of [-2.2,2.2]){detailedWindow(x+dx,1,z-6.1,1.9,2.3,true);if(h>6)detailedWindow(x+dx,4.5,z-6.1,1.8,2,true);}
+ box(x,h+1,z-6.08,1,1.15,.08,'glass');raisedPergola(x-side*8,z,5,9,.3,3.5);
+}
+// The backdrop becomes a varied roofscape of shallow vaults and a central gateway dome.
+for(const x of [-38,-24,-10,10,24,38]){
+ const z=140-6*(1-(x/52)**2);box(x,11.25,z,9,.5,13,'white');barrelVault(x,11.75,z,9,13,3.1);box(x,12.2,z-6.6,1.2,1.2,.08,'glass');
+}
+box(0,.3,123,13,8.3,12,'white');for(const x of [-4,0,4]){detailedWindow(x,1,116.85,2.7,4,true);arch(x,1,116.7,2.9,4,.2);}cyl(0,8.6,123,3.6,.35,'white',32);dome(0,8.95,123,3.6,2.7);
+finish('VaultedVillage');node('RECEPTION_VILLAGE_BARREL_VAULTS_AND_GATEWAY','VaultedVillage',[0,0,0],'architecture-detail');
+// Three staggered beach pavilions around a gently curved deck, as in the image sequence.
+begin();box(0,.4,0,21,.18,10,'stone');for(const x of [-10.4,10.4])box(x,.58,0,.2,3.8,10,'white');box(0,.58,4.9,21,3.8,.2,'white');box(0,.58,-4.8,20,3,.1,'glass');for(const x of [-10,-5,0,5,10])box(x,.58,-5,.24,3.8,.24,'white');box(0,4.38,0,22,.25,11,'white');terraceRail(0,4.63,-5.5,22);raisedPergola(0,-8,21,6,.58,3.65);for(const x of [-7,0,7])box(x,.58,-7,3.5,.85,1.1,'wood');finish('BeachPavilion');
+for(const [i,dx,angle]of [[0,-27,-.3],[1,0,0],[2,27,.3]])place('BEACH_RESTAURANT_PAVILION_'+i,'BeachPavilion',[clubX+dx,.1,clubZ+11-(Math.abs(dx)>0?2:0)],angle,'beach-club');
+// Additional planted courts provide the enclosure visible in the completed reference.
+begin();for(const [x,z]of villas){for(let i=0;i<10;i++){const a=i/10*Math.PI*2,px=x+17*Math.cos(a),pz=z+18*Math.sin(a);if(pz>151)continue;sphere(px,.45,pz,1.5,.9,1.5,'green');sphere(px+.8,.7,pz,1,.8,1,'olive');}}
+finish('PlantedCourtyards');node('VILLA_COURT_PLANTING','PlantedCourtyards',[0,0,0],'landscape');

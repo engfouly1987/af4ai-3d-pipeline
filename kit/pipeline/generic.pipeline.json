@@ -1,0 +1,877 @@
+{
+ "id": "generic",
+ "title": "مسار عام لأي مشروع — من بطاقة المشروع إلى الفيديو",
+ "name": "{{NAME}}",
+ "place": "{{PLACE}}",
+ "cat": "{{TYPE}}",
+ "intro": "<p>مسار عام بـ 40 خطوة في 10 مراحل. ابدأ بـ <b>BRF-00</b>: اكتب وصف مشروعك، والناتج (بطاقة JSON) بيملأ كل البرومبتات الجاية. القيم بين {{ }} بتتبدل تلقائيًا.</p>",
+ "info": [
+  {
+   "h": "المشروع",
+   "html": "<p>{{DNA}}</p><table><tr><td>المكان</td><td>{{PLACE}}</td></tr><tr><td>الأرض</td><td>{{SITE}}</td></tr><tr><td>المساحة</td><td>{{AREA}}</td></tr><tr><td>البرنامج</td><td>{{PROGRAM}}</td></tr><tr><td>الطراز</td><td>{{STYLE}}</td></tr><tr><td>الخامات</td><td>{{MATERIALS}}</td></tr></table>"
+  }
+ ],
+ "locks": [
+  {
+   "n": "1",
+   "title": "الهوية (Project DNA)",
+   "parts": [
+    {
+     "label": "",
+     "text": "PROJECT DNA — {{NAME}}, {{PLACE}}. {{DNA}}"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "قواعد الواقعية (Authenticity Lock)",
+   "parts": [
+    {
+     "label": "",
+     "text": "REALISM RULES: {{RULES}}"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "الإخراج (Board Layout)",
+   "parts": [
+    {
+     "label": "",
+     "text": "Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials."
+    }
+   ]
+  },
+  {
+   "n": "4",
+   "title": "التوقيع",
+   "parts": [
+    {
+     "label": "",
+     "text": "Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+    }
+   ]
+  },
+  {
+   "n": "5",
+   "title": "جمل المرجع",
+   "parts": [
+    {
+     "label": "EXTERIOR",
+     "text": "Keep exactly the same building, massing, materials and palette as the reference image."
+    },
+    {
+     "label": "INTERIOR",
+     "text": "Keep the same architecture and material language as the interior reference."
+    }
+   ]
+  }
+ ],
+ "stages": [
+  {
+   "num": "01",
+   "code": "BRF",
+   "title": "الفكرة والبرنامج",
+   "intro": "",
+   "steps": [
+    {
+     "code": "BRF-00",
+     "ar": "بطاقة المشروع (المُدخل)",
+     "en": "Project Intake",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: ChatGPT أو Gemini (مخرج نصي)"
+      },
+      {
+       "t": "n",
+       "html": "اكتب تفاصيل مشروعك مكان النص بين القوسين، والناتج JSON بيتحط في <b>facts.json</b> ويملأ كل البرومبتات الجاية تلقائيًا."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Act as a senior architect and design-brief consultant. I will describe a project in my own words (any language). Turn it into a clean project card. Ask me at most 3 short questions only if a critical fact is missing (site size, main use, or location); otherwise infer sensible values and mark them \"assumed\". Then output ONLY one JSON object, no prose, with these keys: NAME (short project name, neutral, not a real brand), TYPE (building type), PLACE (city, region, country), SITE (plot size, shape, orientation, streets, neighbours, views, topography), AREA (gross built area and key counts: floors, units, rooms, seats), PROGRAM (list of spaces with areas or counts), USERS (who uses it and how), CLIMATE (sun, wind, temperature, humidity, rain, salt or sand), STYLE (architectural language in one sentence), MATERIALS (5–8 facade and interior materials), PALETTE (4–6 colours in words), STRUCTURE (structural system and grid), MEP (key services and sustainability measures), CODES (local authorities and codes to respect, generic), DNA (one English paragraph of 120–160 words describing the project for image prompts: massing, heights, facade rhythm, materials, palette, landscape, context, light), RULES (ten English realism rules for this building type and place, one line each), SIGNATURE (author name for images or empty). My project: [اكتب هنا وصف مشروعك: النوع، المكان، المساحة، البرنامج، الطراز، أي صور أو قيود]"
+      }
+     ],
+     "check": "كل المفاتيح موجودة، والـ DNA بالإنجليزي ومن غير أسماء تجارية حقيقية."
+    },
+    {
+     "code": "BRF-01",
+     "ar": "البريف والبرنامج",
+     "en": "Design Brief and Space Program",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: ChatGPT أو Gemini (مخرج نصي)"
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Act as a senior architect for {{TYPE}} projects in {{PLACE}}. Using this project card — name {{NAME}}; site {{SITE}}; area {{AREA}}; program {{PROGRAM}}; users {{USERS}}; climate {{CLIMATE}}; style {{STYLE}} — prepare a design brief: 1) a vision in four sentences; 2) goals and users; 3) a space-program table Zone | Space | Area m2 / Count | Key requirement; 4) the planning strategy: access, zoning, orientation, phasing; 5) technical principles: structure {{STRUCTURE}}, services {{MEP}}, approvals under {{CODES}}. Write in Arabic, neutral branding, no marketing language."
+      }
+     ],
+     "check": "البرنامج متوافق مع المساحة، ومفيش فراغ ناقص من بطاقة المشروع."
+    },
+    {
+     "code": "BRF-02",
+     "ar": "التقسيم الوظيفي والحركة",
+     "en": "Zoning and Flows Diagram",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a clean architectural zoning and circulation diagram for {{NAME}}, a {{TYPE}} in {{PLACE}}. Top-down site plan of {{SITE}} with colour-coded zones from this program: {{PROGRAM}}; arrows for main, service and emergency flows; north arrow and scale bar; soft watercolour wash on white paper, crisp line work, short English labels. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "المناطق مفصولة بوضوح، ومسار الخدمة منفصل عن الزوار."
+    },
+    {
+     "code": "BRF-03",
+     "ar": "لوحة الهوية والمزاج",
+     "en": "Identity and Mood Board",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create an architectural mood board for {{NAME}}: {{STYLE}}. Material samples {{MATERIALS}}, colour palette {{PALETTE}}, reference details, light mood and planting typical of {{PLACE}}, arranged as a refined collage on warm paper with small English captions. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الخامات والألوان نفس اللي في بطاقة المشروع."
+    }
+   ]
+  },
+  {
+   "num": "02",
+   "code": "SITE",
+   "title": "الرفع والتحليل والوصلات",
+   "intro": "",
+   "steps": [
+    {
+     "code": "SITE-01",
+     "ar": "الرفع المساحي",
+     "en": "Site Survey",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a precise topographic survey drawing of the site of {{NAME}} in {{PLACE}}: {{SITE}}. Boundary with coordinates, levels, existing trees and structures, street names generic, setbacks dashed, north arrow, scale bar, survey table; technical drawing style on white with thin black and blue lines. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "حدود وأبعاد ومناسيب واضحة، ومفيش مباني مقترحة لسه."
+    },
+    {
+     "code": "SITE-02",
+     "ar": "تحليل الشمس والرياح",
+     "en": "Sun, Wind and Climate Analysis",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create an environmental analysis diagram for the site of {{NAME}}: sun paths for summer and winter, prevailing winds, noise sources, views, and climate {{CLIMATE}}; annotated arrows and soft colour gradients over a light site plan; short English labels and a legend. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "اتجاه الشمال والرياح السائدة صح للمكان."
+    },
+    {
+     "code": "SITE-03",
+     "ar": "الوصلات والمرافق",
+     "en": "Access and Utilities",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a site access and utilities plan for {{NAME}}: vehicle and pedestrian entries, parking, drop-off, service yard, water, power, drainage and telecom connections ({{MEP}}); clean technical plan with colour-coded networks and a legend. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "مدخل الخدمة بعيد عن المدخل الرئيسي."
+    }
+   ]
+  },
+  {
+   "num": "03",
+   "code": "PLAN",
+   "title": "المخططات والمساقط",
+   "intro": "",
+   "steps": [
+    {
+     "code": "PLAN-01",
+     "ar": "المخطط العام",
+     "en": "Masterplan",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a rendered masterplan of {{NAME}}, top-down at 1:500 look: building footprints from this program {{PROGRAM}}, landscape, paths, parking and context of {{SITE}}; soft shadows, watercolour greens, crisp outlines, short English labels, north arrow and scale bar. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الكتل والمساحات منطقية مع بطاقة المشروع."
+    },
+    {
+     "code": "PLAN-02",
+     "ar": "مسقط الدور الأرضي",
+     "en": "Ground Floor Plan",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a furnished architectural ground floor plan of {{NAME}} ({{TYPE}}): structure grid {{STRUCTURE}}, walls with black poche, doors, furniture, room names and areas in English, dimensions, entrance arrows; clean CAD-like drawing on white. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "المداخل والسلالم والمصاعد في أماكن منطقية."
+    },
+    {
+     "code": "PLAN-03",
+     "ar": "مسقط الدور المتكرر",
+     "en": "Typical Floor Plan",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a furnished typical upper floor plan of {{NAME}} on the same grid as the ground floor: cores aligned, wet areas stacked, room names and areas in English, dimensions; clean CAD-like drawing on white. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الكور فوق الكور، والحمامات فوق بعض."
+    },
+    {
+     "code": "PLAN-04",
+     "ar": "القطاع",
+     "en": "Building Section",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a detailed architectural section through {{NAME}}: floor-to-floor heights, slabs, foundations, roof, stair core, levels in metres, people for scale, landscape and street; black poche cut, light grey beyond, short English labels. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "المناسيب واضحة والقطاع ماشي في مكان مفيد."
+    }
+   ]
+  },
+  {
+   "num": "04",
+   "code": "EXT",
+   "title": "المشاهد الخارجية",
+   "intro": "",
+   "steps": [
+    {
+     "code": "EXT-01",
+     "ar": "لقطة الدرون (المرجع)",
+     "en": "Aerial Hero View",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic drone photograph of {{NAME}} in {{PLACE}} at golden hour, about 120 m away at 35 degrees. {{DNA}} Surrounding context of {{SITE}}, a few people and cars for scale. Luminous, calm, realistic. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "ولّدها الأول من غير جملة اللوحة والتوقيع: دي صورة المرجع للمشروع كله."
+    },
+    {
+     "code": "EXT-02",
+     "ar": "المدخل الرئيسي",
+     "en": "Main Entrance",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic eye-level photograph of the main entrance of {{NAME}}: canopy, signage-free facade, materials {{MATERIALS}}, people arriving, soft afternoon light, 24 mm lens. Keep exactly the same building, massing, materials and palette as the reference image. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "نفس الخامات والإيقاع اللي في المرجع."
+    },
+    {
+     "code": "EXT-03",
+     "ar": "الواجهة الرئيسية",
+     "en": "Main Facade",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic frontal photograph of the main facade of {{NAME}} from across the street, two-point perspective corrected, palette {{PALETTE}}, street trees and pedestrians. Keep exactly the same building, massing, materials and palette as the reference image. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الواجهة مستقيمة ومفيش تشويه في الخطوط الرأسية."
+    },
+    {
+     "code": "EXT-04",
+     "ar": "زاوية ثلاثة أرباع",
+     "en": "Three-Quarter View",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic three-quarter street view of {{NAME}} showing two facades and the corner, late afternoon, long soft shadows, context of {{PLACE}}. Keep exactly the same building, massing, materials and palette as the reference image. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الركن متسق مع المسقط."
+    },
+    {
+     "code": "EXT-05",
+     "ar": "الفراغ الخارجي واللاندسكيب",
+     "en": "Landscape and Outdoor Space",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic photograph of the main outdoor space of {{NAME}}: landscape typical of {{PLACE}}, shading, seating, water or planting, people using it naturally. Keep exactly the same building, massing, materials and palette as the reference image. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "النباتات مناسبة للمناخ."
+    },
+    {
+     "code": "EXT-06",
+     "ar": "لقطة الغروب",
+     "en": "Sunset View",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic blue-hour photograph of {{NAME}} with warm interior lights glowing and a deep blue sky. Keep exactly the same building, massing, materials and palette as the reference image. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الإضاءة الداخلية دافية ومتوزعة بشكل منطقي."
+    },
+    {
+     "code": "EXT-07",
+     "ar": "الخدمة والخلفية",
+     "en": "Service and Rear",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a realistic photograph of the rear and service side of {{NAME}}: service yard, plant room, waste and delivery area, screened and tidy. Keep exactly the same building, massing, materials and palette as the reference image. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الخدمة مخفية ومنظمة."
+    }
+   ]
+  },
+  {
+   "num": "05",
+   "code": "INT",
+   "title": "المشاهد الداخلية",
+   "intro": "",
+   "steps": [
+    {
+     "code": "INT-01",
+     "ar": "الفراغ الرئيسي (مرجع الداخل)",
+     "en": "Main Interior Space",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic interior photograph of the main space of {{NAME}} ({{TYPE}}): {{STYLE}}, materials {{MATERIALS}}, palette {{PALETTE}}, natural daylight, people using it, 24 mm lens. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "ولّدها نظيفة من غير لوحة وتوقيع: دي مرجع الداخل."
+    },
+    {
+     "code": "INT-02",
+     "ar": "فراغ ثانوي 1",
+     "en": "Secondary Space 1",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic interior photograph of a key secondary space from this program: {{PROGRAM}}; realistic furniture and lighting, people. Keep the same architecture and material language as the interior reference. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الفراغ من البرنامج فعلًا."
+    },
+    {
+     "code": "INT-03",
+     "ar": "فراغ ثانوي 2",
+     "en": "Secondary Space 2",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic interior photograph of another space from {{PROGRAM}}, different light time of day. Keep the same architecture and material language as the interior reference. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "نفس لغة التشطيب."
+    },
+    {
+     "code": "INT-04",
+     "ar": "الحركة والسلالم",
+     "en": "Circulation and Stairs",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic interior photograph of the main stair and circulation of {{NAME}}, with wayfinding without readable text. Keep the same architecture and material language as the interior reference. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الدرابزين وارتفاعات آمنة."
+    },
+    {
+     "code": "INT-05",
+     "ar": "الحمامات والخدمات",
+     "en": "Wet Areas",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic photograph of a typical washroom of {{NAME}}: accessible layout, durable finishes from {{MATERIALS}}. Keep the same architecture and material language as the interior reference. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "تصميم مناسب لذوي الهمم."
+    },
+    {
+     "code": "INT-06",
+     "ar": "فراغ مميز",
+     "en": "Signature Space",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a hyper-realistic photograph of the most memorable interior moment of {{NAME}}: a double-height space, a courtyard view or a special feature fitting {{STYLE}}. Keep the same architecture and material language as the interior reference. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "لحظة مميزة من غير مبالغة."
+    }
+   ]
+  },
+  {
+   "num": "06",
+   "code": "DET",
+   "title": "التفاصيل",
+   "intro": "",
+   "steps": [
+    {
+     "code": "DET-01",
+     "ar": "تفصيلة الواجهة",
+     "en": "Facade Detail",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a close-up architectural detail of the facade of {{NAME}}: joints, shading elements, window reveal and materials {{MATERIALS}}, with a small axonometric inset. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "التفصيلة قابلة للتنفيذ."
+    },
+    {
+     "code": "DET-02",
+     "ar": "تفصيلة داخلية",
+     "en": "Interior Detail",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a close-up interior detail of {{NAME}}: a junction of floor, wall and ceiling, lighting integration and finishes. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "المواد نفسها في الداخل."
+    },
+    {
+     "code": "DET-03",
+     "ar": "لوحة الخامات",
+     "en": "Material Board",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a physical material board for {{NAME}}: real samples of {{MATERIALS}} in palette {{PALETTE}}, labelled with short English names, soft studio light. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "نفس خامات البطاقة."
+    }
+   ]
+  },
+  {
+   "num": "07",
+   "code": "TECH",
+   "title": "اللوحات الهندسية والتنفيذ",
+   "intro": "",
+   "steps": [
+    {
+     "code": "TECH-01",
+     "ar": "المنظومة الإنشائية",
+     "en": "Structural System",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create an exploded structural axonometric of {{NAME}}: foundations, columns and grid {{STRUCTURE}}, slabs, cores and roof, colour-coded, short English labels. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الكور والجريد زي المساقط."
+    },
+    {
+     "code": "TECH-02",
+     "ar": "الأنظمة والمرافق",
+     "en": "MEP Systems",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create an MEP systems diagram of {{NAME}}: HVAC, water, drainage, power, fire fighting and sustainability measures {{MEP}} as a clean cutaway axonometric with colour-coded networks. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "غرف المعدات لها مكان واضح."
+    },
+    {
+     "code": "TECH-03",
+     "ar": "الاستدامة",
+     "en": "Sustainability",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a sustainability strategy diagram for {{NAME}} in climate {{CLIMATE}}: shading, ventilation, daylight, water reuse, solar, materials; section-based infographic with icons. Presented as a wide horizontal 16:9 board: the image fills most of the frame; a right-side vertical panel labels the main parts in short English; a bottom strip shows three small insets of key materials. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الحلول مناسبة للمناخ."
+    },
+    {
+     "code": "TECH-04",
+     "ar": "مراحل التنفيذ",
+     "en": "Construction Sequence",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a six-panel construction sequence of {{NAME}} from the empty site to completion: excavation, foundations, structure, envelope, finishes, landscape; same camera in every panel, realistic. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "نفس زاوية الكاميرا في الستة."
+    },
+    {
+     "code": "TECH-05",
+     "ar": "البرنامج الزمني",
+     "en": "Programme and Gantt",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: ChatGPT أو Gemini (مخرج نصي)"
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Act as a project manager. Prepare a construction programme for {{NAME}} ({{AREA}}): phases, durations in weeks, dependencies, critical path and a Gantt table, plus key approvals under {{CODES}}. Write in Arabic."
+      }
+     ],
+     "check": "مدة واقعية لحجم المشروع."
+    }
+   ]
+  },
+  {
+   "num": "08",
+   "code": "LIFE",
+   "title": "الحياة اليومية",
+   "intro": "",
+   "steps": [
+    {
+     "code": "LIFE-01",
+     "ar": "صباح في المشروع",
+     "en": "Morning Life",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a candid lifestyle photograph of morning life at {{NAME}}: {{USERS}} arriving and using the place, warm natural light, realistic people. Keep exactly the same building, massing, materials and palette as the reference image. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "ناس طبيعية ومش مُصطنعة."
+    },
+    {
+     "code": "LIFE-02",
+     "ar": "لحظة استخدام",
+     "en": "In Use",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a candid photograph of {{USERS}} enjoying the main space of {{NAME}} in the afternoon. Keep the same architecture and material language as the interior reference. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الاستخدام مطابق لوظيفة المشروع."
+    },
+    {
+     "code": "LIFE-03",
+     "ar": "مساء في المشروع",
+     "en": "Evening Life",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a candid evening photograph at {{NAME}}: lights on, people relaxing, calm atmosphere. Keep exactly the same building, massing, materials and palette as the reference image. Integrate the authorship signature exactly as \"{{SIGNATURE}}\" as a refined embossed signature in the lower right corner, sharp and correctly spelled."
+      }
+     ],
+     "check": "الإضاءة الليلية دافية."
+    }
+   ]
+  },
+  {
+   "num": "09",
+   "code": "MKT",
+   "title": "الهوية والتسويق والافتتاح",
+   "intro": "",
+   "steps": [
+    {
+     "code": "MKT-01",
+     "ar": "غلاف البروشور",
+     "en": "Brochure Cover",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create an elegant brochure cover for {{NAME}} using the aerial hero image, a refined title area with the project name only, palette {{PALETTE}}, no fake logos or slogans."
+      }
+     ],
+     "check": "اسم المشروع بس، من غير شعارات مزيفة."
+    },
+    {
+     "code": "MKT-02",
+     "ar": "بوست سوشيال",
+     "en": "Social Visual",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 4:5 أو 9:16)"
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a vertical social media visual for {{NAME}} from the best exterior view, with clean space at the top for a short headline, no text rendered."
+      }
+     ],
+     "check": "مفيش نص مكتوب جوه الصورة."
+    },
+    {
+     "code": "MKT-03",
+     "ar": "بوستر رحلة المشروع",
+     "en": "Project Journey Poster",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Google Flow أو Gemini (صورة 16:9). لو عندك نموذج 3D: ارفع لقطة النموذج من نفس الزاوية كمرجع (Image-to-Image بقوة 0.35–0.5)."
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Create a poster showing the journey of {{NAME}} from site to opening in six small frames left to right (site, plan, structure, facade, interior, life), consistent architecture, refined layout."
+      }
+     ],
+     "check": "الستة متسقين مع بعض."
+    }
+   ]
+  },
+  {
+   "num": "10",
+   "code": "MOV",
+   "title": "الفيديو ولقطات التحريك",
+   "intro": "",
+   "steps": [
+    {
+     "code": "MOV-01",
+     "ar": "من الشارع للمدخل",
+     "en": "Street to Entrance",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Veo 3 في Flow · إطار البداية: EXT-03 · إطار النهاية: EXT-02"
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Smooth forward gimbal walk at eye level from the street toward the main entrance of {{NAME}}, consistent architecture and materials, no morphing, gentle ambient sound."
+      }
+     ],
+     "check": "الحركة ثابتة ومفيش تشوّه."
+    },
+    {
+     "code": "MOV-02",
+     "ar": "دوران درون",
+     "en": "Drone Orbit",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Veo 3 · إطار البداية: EXT-01"
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Slow drone orbit around {{NAME}} at golden hour, 90 degrees, steady altitude, consistent building, soft wind sound."
+      }
+     ],
+     "check": "المبنى ما يتغيرش أثناء الدوران."
+    },
+    {
+     "code": "MOV-03",
+     "ar": "تايم لابس التنفيذ",
+     "en": "Construction Time-Lapse",
+     "items": [
+      {
+       "t": "n",
+       "html": "الأداة: Veo 3 · الإطارات: TECH-04 (البداية والنهاية) · لو عندك نموذج 3D: ابدأ من آخر فريم في الهيرو"
+      },
+      {
+       "t": "p",
+       "label": "",
+       "text": "Construction time-lapse of {{NAME}} from the empty site to the completed building, fixed camera matching the start frame, crews and cranes, day cycles, ending on the completed hero view."
+      }
+     ],
+     "check": "الكاميرا ثابتة ونهايته = صورة المرجع."
+    }
+   ]
+  }
+ ],
+ "errors": [
+  {
+   "e": "المبنى اتغير عن المرجع",
+   "fix": "Keep everything the same as the reference image; only change the camera as described."
+  },
+  {
+   "e": "نص أو لافتات مقروءة في الصورة",
+   "fix": "Keep everything the same; remove all readable text, signs and logos."
+  },
+  {
+   "e": "مقياس غلط للناس أو العربيات",
+   "fix": "Keep everything the same; correct the scale of people and cars to match a floor height of about 3.2 m."
+  },
+  {
+   "e": "خطوط رأسية مايلة",
+   "fix": "Keep everything the same; correct the perspective so all vertical lines are vertical."
+  },
+  {
+   "e": "خامات مختلفة عن البطاقة",
+   "fix": "Keep everything the same; use only these materials: {{MATERIALS}}."
+  }
+ ],
+ "usage": "<ol><li>شغّل BRF-00 واحفظ الناتج facts.json.</li><li>املأ المسار: <code>python fill-pipeline.py generic.pipeline.json facts.json &lt;slug&gt;.pipeline.json</code></li><li>ابدأ بـ EXT-01 و INT-01 نضاف (مرجعين)، وبعدين كمّل بالترتيب.</li></ol>",
+ "count": 41
+}

@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>مسار AF4AI 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: drafting-sheet guide. Sticky stage index on the right (RTL), working sections on the left; each section is one stage of the pipeline. */
+:root{
+  --bg:#ECEDE8; --surface:#F8F8F5; --sunk:#E2E4DE; --ink:#1B1E1A; --muted:#5B6058; --line:#C6CAC1;
+  --accent:#9E5A07; --accent-soft:#F1E1C8; --glass:#5F8BA0; --green:#5E7D4A;
+  --ok:#2C7A4C; --ok-soft:#DCEEDF; --warn:#9A6200; --warn-soft:#F5E7C6; --bad:#B03A2E; --bad-soft:#F6DCD8;
+  --f-display:"Alexandria","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121411; --surface:#1A1D19; --sunk:#232721; --ink:#E7E9E3; --muted:#A1A69B; --line:#353A32;
+  --accent:#E3A04A; --accent-soft:#3A2B15; --glass:#86AFC2; --green:#93B27C;
+  --ok:#6FC291; --ok-soft:#1C3325; --warn:#E3B35A; --warn-soft:#3A2F14; --bad:#EE8577; --bad-soft:#3E201C;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121411; --surface:#1A1D19; --sunk:#232721; --ink:#E7E9E3; --muted:#A1A69B; --line:#353A32;
+  --accent:#E3A04A; --accent-soft:#3A2B15; --glass:#86AFC2; --green:#93B27C;
+  --ok:#6FC291; --ok-soft:#1C3325; --warn:#E3B35A; --warn-soft:#3A2F14; --bad:#EE8577; --bad-soft:#3E201C;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.75}
+.app{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+code,.mono{font-family:var(--f-mono);font-size:.86em;direction:ltr;unicode-bidi:isolate}
+code{background:var(--sunk);padding:1px 6px;border-radius:4px;white-space:nowrap}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* header */
+.top{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;border-bottom:1.5px solid var(--ink);padding-bottom:20px;margin-bottom:28px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;direction:ltr;text-align:right}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,4.4vw,46px);line-height:1.2;margin:6px 0 8px;text-wrap:balance}
+h1 .x{color:var(--accent)}
+.lede{color:var(--muted);max-width:62ch;margin:0}
+.meter{min-width:220px;display:grid;gap:6px;justify-items:start}
+.meter-num{font-family:var(--f-display);font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.meter-bar{width:220px;max-width:100%;height:8px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.meter-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.meter small{color:var(--muted);font-size:13px}
+
+/* shell */
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:40px;align-items:start}
+nav.idx{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:grid;gap:2px;font-size:14px}
+nav.idx .grp{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--muted);margin:14px 0 4px;direction:ltr;text-align:right}
+nav.idx a{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;color:var(--ink);text-decoration:none;padding:6px 8px;border-radius:5px}
+nav.idx a:hover{background:var(--sunk)}
+nav.idx a.cur{background:var(--surface);box-shadow:inset -2px 0 0 var(--accent)}
+nav.idx .k{font-family:var(--f-mono);font-size:12px;color:var(--muted);direction:ltr}
+nav.idx .who{font-size:11px;color:var(--muted)}
+nav.idx .who.me{color:var(--accent)}
+
+main{display:grid;gap:56px;min-width:0}
+section{scroll-margin-top:20px;min-width:0}
+.sec-head{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:baseline;margin-bottom:14px}
+.sec-k{font-family:var(--f-mono);font-size:13px;color:var(--accent);direction:ltr;border:1px solid var(--accent);border-radius:4px;padding:1px 7px}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(21px,2.5vw,27px);margin:0;line-height:1.35;text-wrap:balance}
+.owner{font-size:12px;padding:2px 10px;border-radius:99px;background:var(--sunk);color:var(--muted);white-space:nowrap}
+.owner.you{background:var(--accent-soft);color:var(--accent)}
+h3{font-family:var(--f-display);font-weight:500;font-size:17px;margin:26px 0 10px}
+p{margin:0 0 12px;max-width:68ch}
+.note{border-inline-start:3px solid var(--accent);background:var(--surface);padding:10px 14px;border-radius:0 var(--r) var(--r) 0;margin:14px 0;max-width:72ch}
+.key{background:var(--accent-soft);border-radius:var(--r);padding:12px 16px;margin:0 0 16px;font-weight:500;max-width:72ch}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:right;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:13px;background:var(--sunk)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:2px 10px;border-radius:99px;white-space:nowrap}
+.pill.on{background:var(--ok-soft);color:var(--ok)}
+.pill.off{background:var(--bad-soft);color:var(--bad)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+
+/* buttons */
+button,.btn{font:inherit;font-size:14px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:5px;padding:6px 12px;line-height:1.4}
+button:hover{border-color:var(--ink)}
+button.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button.cp{font-size:12px;padding:2px 8px;color:var(--muted)}
+button.cp.done{color:var(--ok);border-color:var(--ok)}
+button.danger{color:var(--bad);border-color:var(--bad)}
+
+/* pipeline */
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.flow > div{padding:14px 16px;border-inline-start:1px solid var(--line);display:grid;gap:4px;align-content:start}
+.flow > div:first-child{border-inline-start:0}
+.flow .fk{font-family:var(--f-mono);font-size:12px;color:var(--muted);direction:ltr;text-align:right}
+.flow b{font-family:var(--f-display);font-weight:500;font-size:15.5px}
+.flow span{font-size:13.5px;color:var(--muted)}
+.flow .owner{justify-self:start;margin-top:4px}
+
+/* checklist */
+.chk-list{display:grid;gap:2px;margin:6px 0 0;padding:0;list-style:none;max-width:76ch}
+.chk{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;padding:7px 10px;border-radius:5px;cursor:pointer}
+.chk:hover{background:var(--surface)}
+.chk input{width:18px;height:18px;margin:4px 0 0;accent-color:var(--accent)}
+.chk input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.grp-prog{font-family:var(--f-mono);font-size:12px;color:var(--muted);direction:ltr}
+
+/* two-col */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;min-width:0}
+.panel h3{margin-top:0}
+
+/* stage preview */
+.stage{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden;margin:16px 0}
+.stage-draw{padding:12px;background:var(--sunk);min-width:0}
+.stage-draw svg{width:100%;height:auto;display:block;max-width:100%}
+.stage-side{padding:16px 18px;display:grid;gap:12px;align-content:start;min-width:0}
+.stage-pct{font-family:var(--f-display);font-size:34px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.stage-pct small{font-size:14px;color:var(--muted);font-weight:500}
+.stage-tag{font-family:var(--f-mono);font-size:15px;color:var(--accent);direction:ltr;text-align:right}
+.stage-cap{font-family:var(--f-display);font-weight:500;font-size:15px;min-height:2.6em}
+input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
+.stage-ctl{display:flex;gap:8px;flex-wrap:wrap}
+
+svg .ln{stroke:var(--ink);stroke-width:1.4;fill:var(--surface)}
+svg .ln-thin{stroke:var(--muted);stroke-width:1;fill:none}
+svg .earth{fill:var(--line);opacity:.45}
+svg .glass{fill:var(--glass);opacity:.55;stroke:var(--ink);stroke-width:1}
+svg .grass{fill:var(--green);opacity:.75}
+svg .water{fill:var(--glass);opacity:.8}
+svg .lbl{font-family:var(--f-mono);font-size:10px;fill:var(--muted)}
+svg .svy{stroke:var(--accent);stroke-width:1.6;fill:none}
+svg .el{transition:opacity .35s ease,transform .45s ease;transform-box:fill-box;transform-origin:50% 100%}
+svg .el.off{opacity:0;transform:translateY(14px)}
+svg .el.new .ln, svg .el.new.ln{fill:var(--accent-soft);stroke:var(--accent)}
+
+/* tabs */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:0}
+.tabs button{border:0;border-radius:5px 5px 0 0;background:transparent;padding:8px 14px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+.tabpanel{padding-top:14px}
+.tabpanel .path{font-size:14px;color:var(--muted);margin-bottom:10px}
+
+/* forms */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.f{display:grid;gap:4px;min-width:0}
+.f label{font-size:13px;color:var(--muted)}
+input[type=text],input[type=number],select,textarea{font:inherit;font-size:14.5px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:7px 10px;width:100%;min-width:0}
+textarea{resize:vertical;min-height:64px}
+.inline-chk{display:flex;gap:8px;align-items:center;font-size:14px}
+.out{position:relative;background:var(--ink);color:var(--bg);border-radius:var(--r);padding:14px 16px;margin-top:12px;min-width:0}
+.out pre{margin:0;font-family:var(--f-mono);font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.out.rtl pre{font-family:var(--f-body);font-size:14px;direction:rtl}
+.out pre.ltr{direction:ltr;text-align:left}
+.out .cp{position:absolute;top:10px;inset-inline-end:10px;background:transparent;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 40%,transparent)}
+.example{font-size:12px;color:var(--muted)}
+.res{display:grid;gap:8px;margin-top:12px}
+.res-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;background:var(--bg);border-radius:5px;font-size:14px}
+
+/* storyboard */
+.sb{display:flex;gap:3px;margin:12px 0 6px;direction:ltr}
+.sb button{flex:var(--d) 1 0;min-width:0;padding:10px 4px;border-radius:4px;background:var(--sunk);border:1px solid var(--line);font-family:var(--f-mono);font-size:11.5px;color:var(--muted);text-align:center}
+.sb button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.sb-axis{display:flex;justify-content:space-between;direction:ltr;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.sb-detail{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin-top:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.sb-detail dt{color:var(--muted);font-size:13px}
+.sb-detail dd{margin:0}
+.ratios{display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap;margin-top:6px}
+.ratio{display:grid;gap:6px;justify-items:center;font-size:13px;color:var(--muted)}
+.ratio i{display:block;border:1.5px solid var(--ink);border-radius:3px;background:var(--surface);position:relative}
+.ratio i::after{content:"";position:absolute;inset:30% 30% 20%;border:1px solid var(--accent);border-radius:2px}
+.ratio b{font-family:var(--f-mono);color:var(--ink);font-size:13px;direction:ltr}
+
+.reset-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:24px}
+  nav.idx{position:static;display:flex;flex-wrap:wrap;gap:6px}
+  nav.idx .grp{display:none}
+  nav.idx a{display:flex;gap:6px;background:var(--surface);border:1px solid var(--line);padding:4px 10px;font-size:13px}
+  nav.idx a .who{display:none}
+  .top{grid-template-columns:1fr}
+  .stage{grid-template-columns:1fr}
+  .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flow > div:nth-child(3){border-inline-start:0}
+  .flow > div:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media (max-width:480px){
+  .flow{grid-template-columns:1fr}
+  .flow > div{border-inline-start:0;border-top:1px solid var(--line)}
+  .flow > div:first-child{border-top:0}
+  .sec-head{grid-template-columns:auto 1fr}
+  .sec-head .owner{grid-column:2;justify-self:start}
+}
+@media (prefers-reduced-motion:reduce){
+  svg .el,.meter-bar i{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="app" dir="rtl" lang="ar">
+
+<header class="top">
+  <div>
+    <div class="eyebrow">AF4AI · 3D PIPELINE · v1.0 · OCT 2026</div>
+    <h1>مسار <span class="x">AF4AI 3D</span>: من موديل SketchUp إلى هيرو تفاعلي وفيديو</h1>
+    <p class="lede">دليل عمل لتجهيز موديل فيلا أو مشروع سكني، وتحويله إلى هيرو 3D على af4ai.com يتبني مع السكرول، وفيديو MP4 بثلاثة مقاسات لفيسبوك ولينكدإن والريلز. علّم على كل بند وأنت بتشتغل، وتقدّمك بيتحفظ في متصفحك.</p>
+  </div>
+  <div class="meter" aria-live="polite">
+    <span class="meter-num" id="m-num">0 / 0</span>
+    <span class="meter-bar"><i id="m-bar"></i></span>
+    <small>بنود اتعلّم عليها في كل الدليل</small>
+  </div>
+</header>
+
+<div class="shell">
+<nav class="idx" aria-label="أقسام الدليل">
+  <div class="grp">OVERVIEW</div>
+  <a href="#overview"><span class="k">01</span><span>نظرة عامة</span></a>
+  <a href="#outputs"><span class="k">02</span><span>المخرجات</span></a>
+  <div class="grp">YOUR PART</div>
+  <a href="#prep"><span class="k">A</span><span>تجهيز الموديل</span><span class="who me">أنت</span></a>
+  <a href="#tags"><span class="k">B</span><span>طبقات المراحل</span><span class="who me">أنت</span></a>
+  <a href="#materials"><span class="k">C</span><span>الخامات</span><span class="who me">أنت</span></a>
+  <a href="#cleanup"><span class="k">D</span><span>التنضيف والحجم</span><span class="who me">أنت</span></a>
+  <a href="#export"><span class="k">E</span><span>التصدير</span><span class="who me">أنت</span></a>
+  <a href="#delivery"><span class="k">F</span><span>التسليم</span><span class="who me">أنت</span></a>
+  <div class="grp">CLAUDE'S PART</div>
+  <a href="#processing"><span class="k">09</span><span>التحويل والضغط</span><span class="who">Claude</span></a>
+  <a href="#hero"><span class="k">10</span><span>الهيرو التفاعلي</span><span class="who">Claude</span></a>
+  <a href="#video"><span class="k">11</span><span>الفيديو</span><span class="who">Claude</span></a>
+  <div class="grp">REVIEW &amp; MORE</div>
+  <a href="#qa"><span class="k">12</span><span>مراجعة الجودة</span></a>
+  <a href="#revit"><span class="k">13</span><span>موديلات Revit</span></a>
+  <a href="#service"><span class="k">14</span><span>كخدمة مدفوعة</span></a>
+  <a href="#final"><span class="k">15</span><span>فحص قبل الإرسال</span><span class="who me">أنت</span></a>
+</nav>
+
+<main>
+
+<!-- 01 overview -->
+<section id="overview">
+  <div class="sec-head"><span class="sec-k">01</span><h2>نظرة عامة على المسار</h2></div>
+  <div class="flow">
+    <div><span class="fk">A – D</span><b>تجهيز في SketchUp</b><span>وحدات، طبقات المراحل، خامات، تنضيف</span><span class="owner you">أنت · 1–3 ساعات</span></div>
+    <div><span class="fk">E – F</span><b>تصدير وتسليم</b><span>GLB أو DAE أو OBJ، مع ملف ‎.skp المنضّف</span><span class="owner you">أنت</span></div>
+    <div><span class="fk">09</span><b>تحويل وضغط</b><span>GLB مقسّم على المراحل، نسخة للمكتب ونسخة للموبايل</span><span class="owner">Claude · جلسة</span></div>
+    <div><span class="fk">10 – 11</span><b>مشهد Three.js</b><span>هيرو تفاعلي على الموقع، ورندر فريم بفريم إلى MP4</span><span class="owner">Claude · جلستين</span></div>
+  </div>
+  <p style="margin-top:14px">بعدها جولة أو اتنين مراجعة وتعديلات بيننا.</p>
+</section>
+
+<!-- 02 outputs -->
+<section id="outputs">
+  <div class="sec-head"><span class="sec-k">02</span><h2>المخرجات النهائية</h2></div>
+  <div class="cols">
+    <div class="panel">
+      <h3>الهيرو التفاعلي</h3>
+      <ul style="margin:0;padding-inline-start:18px">
+        <li>المبنى يتبني مرحلة بمرحلة مع السكرول، من الأرض حتى التسليم.</li>
+        <li>لف حوالين المبنى بالسحب بالماوس أو بالإصبع.</li>
+        <li>إضاءة خفيفة تتبع المؤشر.</li>
+        <li>نصوص عربية بهوية AF4AI لكل مرحلة.</li>
+        <li>صورة ثابتة تظهر فورًا، والموديل يتحمّل في الخلفية.</li>
+        <li>نسخة أخف للموبايل، وبديل ثابت لمن يفعّل تقليل الحركة.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>الفيديو التسويقي</h3>
+      <div class="ratios" aria-label="المقاسات الثلاثة بنفس النسبة">
+        <div class="ratio"><i style="width:112px;height:63px"></i><b>16:9</b><span>لينكدإن · يوتيوب</span></div>
+        <div class="ratio"><i style="width:64px;height:80px"></i><b>4:5</b><span>بوست فيسبوك</span></div>
+        <div class="ratio"><i style="width:50px;height:89px"></i><b>9:16</b><span>ريلز · ستوري</span></div>
+      </div>
+      <p style="margin-top:14px;font-size:14px;color:var(--muted)">15–25 ثانية، 60 فريم/ثانية، H.264. الرندر بيتم في بيئة العمل السحابية، واللي هتحمّله هو الفيديو النهائي بس (حوالي 10–30 ميجا للملف).</p>
+    </div>
+  </div>
+</section>
+
+<!-- A prep -->
+<section id="prep">
+  <div class="sec-head"><span class="sec-k">A</span><h2>تجهيز الموديل في SketchUp</h2><span class="owner you">أنت</span></div>
+
+  <h3>الوحدات والمحاور</h3>
+  <div class="tw"><table>
+    <thead><tr><th>البند</th><th>المطلوب</th><th>السبب</th></tr></thead>
+    <tbody>
+      <tr><td>الوحدات</td><td><b>متر</b> من Window ← Model Info ← Units</td><td>Three.js بيشتغل بالمتر؛ أي وحدة تانية بتطلع المبنى بحجم غلط</td></tr>
+      <tr><td>نقطة الأصل</td><td>منتصف المبنى عند منسوب الصفر</td><td>الكاميرا بتلف حوالين نقطة الأصل</td></tr>
+      <tr><td>المحور الرأسي</td><td>Z لفوق (الافتراضي)</td><td>يتظبط تلقائيًا وقت التحويل</td></tr>
+      <tr><td>المنسوب</td><td>الأرض الطبيعية عند <code>Z = 0</code></td><td>عشان الأساسات تبان تحت الأرض صح</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">لو نقطة الأصل بعيدة عن المبنى (شائع في الموديلات المستوردة من CAD بإحداثيات حقيقية): حدد كل الموديل، اعمله Group، وانقله بحيث منتصفه يكون على الأصل.</div>
+
+  <h3>التنظيم والأسطح <span class="grp-prog" data-prog="prep"></span></h3>
+  <ul class="chk-list" data-group="prep">
+    <li><label class="chk"><input type="checkbox" id="c-prep-1"><span>كل عنصر بنائي (عمود، بلاطة، حائط، شباك) جوه <b>Group</b> أو <b>Component</b>.</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-prep-2"><span>العناصر المتكررة (أعمدة، شبابيك، أبواب) <b>Components</b>، عشان الشكل يتخزن مرة واحدة.</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-prep-3"><span>مفيش Faces أو Edges حرة على مستوى الموديل.</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-prep-4"><span>فحص الأسطح المقلوبة: View ← Face Style ← <b>Monochrome</b>. أي أزرق ظاهر من برا اتصلح بـ Reverse Faces أو Orient Faces.</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-prep-5"><span>الحوائط والبلاطات مقفولة (Solid) قدر الإمكان، من غير أسطح ناقصة.</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-prep-6"><span>مفيش أسطح فوق بعض في نفس المكان؛ بتعمل وميض (Z-fighting) في العرض.</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-prep-7"><span>الأسطح المنحنية معمولها Soften/Smooth بدل تكثير الأسطح.</span></label></li>
+  </ul>
+  <div class="note">اتجاه الأسطح هو أكتر سبب بيبوّظ الموديلات على الويب: الويب بيعرض الوش الأمامي بس، فلو الوش الخلفي لبرا السطح بيختفي.</div>
+</section>
+
+<!-- B tags -->
+<section id="tags">
+  <div class="sec-head"><span class="sec-k">B</span><h2>طبقات المراحل (Tags)</h2><span class="owner you">أنت</span></div>
+  <div class="key">ده أهم قسم في الدليل. حركة المبنى وهو بيتبني قدام الزائر معتمدة بالكامل على التقسيم ده.</div>
+
+  <div class="stage">
+    <div class="stage-draw">
+      <svg id="villa" viewBox="0 0 600 310" role="img" aria-label="واجهة فيلا من دورين تظهر عناصرها حسب المرحلة">
+        <!-- 01 site -->
+        <g class="el" data-at="0" data-tag="01_Site">
+          <rect class="earth" x="0" y="240" width="600" height="70"/>
+          <line class="ln-thin" x1="0" y1="240" x2="600" y2="240" style="stroke:var(--ink);stroke-width:1.6"/>
+          <line class="ln-thin" x1="20" y1="252" x2="580" y2="252" stroke-dasharray="6 5"/>
+          <text class="lbl" x="22" y="236" direction="ltr">±0.00</text>
+        </g>
+        <!-- 02 survey -->
+        <g class="el" data-at="5" data-tag="02_Survey">
+          <path class="svy" d="M60 232v16M52 240h16 M300 232v16M292 240h16 M540 232v16M532 240h16"/>
+          <text class="lbl" x="52" y="226" direction="ltr" style="fill:var(--accent)">BM1</text>
+          <text class="lbl" x="530" y="226" direction="ltr" style="fill:var(--accent)">BM2</text>
+        </g>
+        <!-- 03 foundations -->
+        <g class="el" data-at="10" data-tag="03_Foundations">
+          <rect class="ln" x="120" y="258" width="40" height="16"/><rect class="ln" x="135" y="240" width="10" height="18"/>
+          <rect class="ln" x="240" y="258" width="40" height="16"/><rect class="ln" x="255" y="240" width="10" height="18"/>
+          <rect class="ln" x="360" y="258" width="40" height="16"/><rect class="ln" x="375" y="240" width="10" height="18"/>
+          <rect class="ln" x="450" y="258" width="40" height="16"/><rect class="ln" x="465" y="240" width="10" height="18"/>
+        </g>
+        <!-- 04 columns -->
+        <g class="el" data-at="17" data-tag="04_Columns">
+          <rect class="ln" x="135" y="70" width="10" height="162"/>
+          <rect class="ln" x="255" y="70" width="10" height="162"/>
+          <rect class="ln" x="375" y="70" width="10" height="162"/>
+          <rect class="ln" x="465" y="70" width="10" height="162"/>
+        </g>
+        <!-- 05 beams -->
+        <g class="el" data-at="24" data-tag="05_Beams">
+          <rect class="ln" x="130" y="150" width="350" height="8"/>
+          <rect class="ln" x="130" y="70" width="350" height="8"/>
+        </g>
+        <!-- 06 slabs, floor by floor -->
+        <g class="el" data-at="30" data-tag="06_Slabs"><rect class="ln" x="118" y="232" width="374" height="8"/><text class="lbl" x="500" y="239" direction="ltr">Slab_GF</text></g>
+        <g class="el" data-at="37" data-tag="06_Slabs"><rect class="ln" x="118" y="142" width="374" height="8"/><text class="lbl" x="22" y="148" direction="ltr">+3.60</text><text class="lbl" x="500" y="149" direction="ltr">Slab_F1</text></g>
+        <g class="el" data-at="44" data-tag="06_Slabs"><rect class="ln" x="70" y="62" width="422" height="8"/><text class="lbl" x="22" y="68" direction="ltr">+7.20</text><text class="lbl" x="500" y="69" direction="ltr">Slab_Roof</text></g>
+        <!-- 07 walls -->
+        <g class="el" data-at="50" data-tag="07_Walls">
+          <rect class="ln" x="145" y="158" width="110" height="74"/><rect class="ln" x="265" y="158" width="110" height="74"/><rect class="ln" x="385" y="158" width="80" height="74"/>
+          <rect class="ln" x="145" y="78" width="110" height="64"/><rect class="ln" x="265" y="78" width="110" height="64"/><rect class="ln" x="385" y="78" width="80" height="64"/>
+        </g>
+        <!-- 08 openings -->
+        <g class="el" data-at="60" data-tag="08_Openings">
+          <rect class="glass" x="160" y="172" width="80" height="60"/>
+          <rect class="glass" x="295" y="180" width="30" height="52"/>
+          <rect class="glass" x="400" y="172" width="50" height="42"/>
+          <rect class="glass" x="160" y="92" width="80" height="40"/>
+          <rect class="glass" x="285" y="92" width="70" height="40"/>
+          <rect class="glass" x="400" y="92" width="50" height="40"/>
+        </g>
+        <!-- 09 facade -->
+        <g class="el" data-at="70" data-tag="09_Facade">
+          <path class="ln-thin" style="stroke:var(--ink)" d="M75 70v72M85 70v72M95 70v72M105 70v72M115 70v72"/>
+          <rect class="ln" x="70" y="142" width="62" height="6"/>
+          <path class="ln-thin" style="stroke:var(--ink)" d="M385 80v60M395 80v60M455 80v60M465 80v60"/>
+        </g>
+        <!-- 10 roof -->
+        <g class="el" data-at="80" data-tag="10_Roof">
+          <rect class="ln" x="118" y="48" width="374" height="14"/>
+          <rect class="ln" x="370" y="14" width="90" height="34"/>
+          <rect class="glass" x="388" y="24" width="24" height="18"/>
+        </g>
+        <!-- 11 landscape -->
+        <g class="el" data-at="90" data-tag="11_Landscape">
+          <rect class="grass" x="0" y="236" width="118" height="4"/><rect class="grass" x="492" y="236" width="108" height="4"/>
+          <rect class="water" x="510" y="240" width="72" height="10"/>
+          <circle class="grass" cx="40" cy="196" r="26"/><rect x="38" y="214" width="4" height="22" style="fill:var(--muted)"/>
+          <circle class="grass" cx="545" cy="204" r="20"/><rect x="543" y="218" width="4" height="18" style="fill:var(--muted)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="stage-side">
+      <div class="stage-pct"><span id="s-pct">100</span><small>% من السكرول</small></div>
+      <div class="stage-tag" id="s-tag">11_Landscape</div>
+      <div class="stage-cap" id="s-cap">العرض والتسويق: اختر من أين تبدأ</div>
+      <label for="s-range" class="example">حرّك المؤشر عشان تشوف المراحل بتظهر بالترتيب، زي ما هتحصل في الهيرو</label>
+      <input type="range" id="s-range" min="0" max="100" value="100">
+      <div class="stage-ctl"><button class="primary" id="s-play" type="button">شغّل البناء</button><button id="s-reset" type="button">من الأول</button></div>
+    </div>
+  </div>
+
+  <h3>أسماء الـ Tags المعتمدة</h3>
+  <p>استخدم الأسماء دي بالظبط (إنجليزي بالأرقام، عشان تتقري آليًا من غير لبس). لو موديلك مفيهوش مرحلة معينة، سيبها؛ الحركة هتتخطاها.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Tag</th><th>المحتوى</th><th>يظهر عند</th><th></th></tr></thead>
+    <tbody id="tag-rows"></tbody>
+  </table></div>
+  <div class="reset-row"><button type="button" id="copy-all-tags">انسخ كل الأسماء</button><span class="example">للصق في ملاحظاتك أو مقارنتها بالموديل</span></div>
+
+  <h3>قاعدة SketchUp الذهبية</h3>
+  <ul class="chk-list" data-group="tags">
+    <li><label class="chk"><input type="checkbox" id="c-tags-1"><span>الـ Tag متحط على الـ <b>Group أو الـ Component</b>، مش على الأسطح والخطوط.</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-tags-2"><span>الأسطح والخطوط جوه الـ Group على <b>Untagged</b>.</span></label></li>
+  </ul>
+
+  <h3>أسماء الأدوار</h3>
+  <p>لو الفيلا أكتر من دور، وعايز البلاطات والحوائط تطلع دور ورا دور، سمّي الـ Groups جوه كل Tag برقم الدور. اختار عدد الأدوار، وانسخ الأسماء:</p>
+  <div class="panel">
+    <div class="fgrid">
+      <div class="f"><label for="f-up">أدوار فوق الأرضي</label><input type="number" id="f-up" min="0" max="20" value="1"></div>
+      <div class="f" style="align-content:end"><label class="inline-chk"><input type="checkbox" id="f-base"> فيه بدروم (B1)</label></div>
+      <div class="f" style="align-content:end"><label class="inline-chk"><input type="checkbox" id="f-roof" checked> فيه سطح (Roof)</label></div>
+    </div>
+    <div class="out"><pre class="ltr" id="f-out"></pre><button class="cp" type="button" data-copy="f-out">نسخ</button></div>
+  </div>
+</section>
+
+<!-- C materials -->
+<section id="materials">
+  <div class="sec-head"><span class="sec-k">C</span><h2>الخامات</h2><span class="owner you">أنت</span></div>
+  <p>سمّي كل خامة باسم إنجليزي يبدأ بنوعها. البادئة دي بتربط الخامة تلقائيًا بإعدادات شكل جاهزة (لمعة، شفافية، خشونة).</p>
+  <div class="tw"><table>
+    <thead><tr><th>البادئة</th><th>النوع</th><th>مثال</th></tr></thead>
+    <tbody>
+      <tr><td><code>Concrete_</code></td><td>خرسانة</td><td><code>Concrete_Raw</code></td></tr>
+      <tr><td><code>Plaster_</code></td><td>محارة / دهان</td><td><code>Plaster_White</code></td></tr>
+      <tr><td><code>Stone_</code></td><td>حجر / رخام</td><td><code>Stone_Travertine</code></td></tr>
+      <tr><td><code>Glass_</code></td><td>زجاج</td><td><code>Glass_Clear</code> · <code>Glass_Tinted</code></td></tr>
+      <tr><td><code>Metal_</code></td><td>معادن</td><td><code>Metal_Black</code> · <code>Metal_Bronze</code></td></tr>
+      <tr><td><code>Wood_</code></td><td>خشب</td><td><code>Wood_Teak</code></td></tr>
+      <tr><td><code>Water_</code></td><td>مياه</td><td><code>Water_Pool</code></td></tr>
+      <tr><td><code>Grass_</code></td><td>نجيلة</td><td><code>Grass_Lawn</code></td></tr>
+      <tr><td><code>Paving_</code></td><td>بلاط خارجي</td><td><code>Paving_Grey</code></td></tr>
+    </tbody>
+  </table></div>
+  <h3>قواعد الصور (Textures)</h3>
+  <ul class="chk-list" data-group="mat">
+    <li><label class="chk"><input type="checkbox" id="c-mat-1"><span>كل الصور أقصاها <b>2048×2048</b>، والأفضل 1024×1024.</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-mat-2"><span>JPG للخامات العادية، PNG للي فيها شفافية بس.</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-mat-3"><span>الزجاج من غير صورة: لون + نسبة شفافية (Opacity) من SketchUp.</span></label></li>
+  </ul>
+</section>
+
+<!-- D cleanup -->
+<section id="cleanup">
+  <div class="sec-head"><span class="sec-k">D</span><h2>التنضيف وتخفيف الحجم</h2><span class="owner you">أنت</span></div>
+  <div class="key">كل ميجا بتوفرها هنا بتوفرها من باقتك وقت الرفع، ومن وقت تحميل الموقع للزائر.</div>
+  <div class="cols">
+    <div>
+      <h3 style="margin-top:0">احذف <span class="grp-prog" data-prog="clean"></span></h3>
+      <ul class="chk-list" data-group="clean">
+        <li><label class="chk"><input type="checkbox" id="c-clean-1"><span>الفرش الداخلي بالكامل (الكاميرا برا المبنى)</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-clean-2"><span>الحوائط الداخلية اللي مش ظاهرة من الشبابيك (اختياري)</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-clean-3"><span>البني آدمين والعربيات الـ 3D</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-clean-4"><span>الأشجار التقيلة (هتتعمل في المشهد)</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-clean-5"><span>أي حاجة Hidden أو على Tag مقفول</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-clean-6"><span>الصور المرجعية والـ CAD المستورد</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-clean-7"><span>الـ Scenes والـ Section Planes</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-clean-8"><span><b>Purge Unused</b> من Window ← Model Info ← Statistics</span></label></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>افحص حجم موديلك</h3>
+      <p style="font-size:14px;color:var(--muted)">اكتب الأرقام من Model Info ← Statistics. الأرقام الموجودة مثال.</p>
+      <div class="fgrid">
+        <div class="f"><label for="b-faces">عدد الأسطح (Faces)</label><input type="number" id="b-faces" min="0" value="180000"></div>
+        <div class="f"><label for="b-size">حجم ‎.skp (ميجا)</label><input type="number" id="b-size" min="0" step="0.1" value="24"></div>
+        <div class="f"><label for="b-mats">عدد الخامات</label><input type="number" id="b-mats" min="0" value="18"></div>
+      </div>
+      <div class="res" id="b-res"></div>
+    </div>
+  </div>
+</section>
+
+<!-- E export -->
+<section id="export">
+  <div class="sec-head"><span class="sec-k">E</span><h2>التصدير</h2><span class="owner you">أنت</span></div>
+  <p>اختار واحد من التلاتة، بالترتيب ده حسب المتاح عندك. وابعت ملف ‎.skp المنضّف كمان كمرجع.</p>
+  <div class="tabs" role="tablist" aria-label="صيغة التصدير">
+    <button role="tab" id="t-glb" aria-selected="true" aria-controls="p-glb" type="button">GLB · الأفضل</button>
+    <button role="tab" id="t-dae" aria-selected="false" aria-controls="p-dae" type="button">Collada ‏.dae</button>
+    <button role="tab" id="t-obj" aria-selected="false" aria-controls="p-obj" type="button">OBJ ‏.obj</button>
+  </div>
+  <div class="tabpanel" role="tabpanel" id="p-glb" aria-labelledby="t-glb">
+    <div class="path">لو عندك إضافة تصدير glTF/GLB من Extension Warehouse. النتيجة ملف واحد، والخامات جواه.</div>
+    <div class="tw"><table><thead><tr><th>الإعداد</th><th>القيمة</th></tr></thead><tbody>
+      <tr><td>الصيغة</td><td><code>.glb</code></td></tr>
+      <tr><td>Export textures</td><td><span class="pill on">✓ مفعّل</span></td></tr>
+      <tr><td>Preserve hierarchy / Groups as nodes</td><td><span class="pill on">✓ مفعّل</span></td></tr>
+      <tr><td>Export hidden geometry</td><td><span class="pill off">✗ مقفول</span></td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tabpanel" role="tabpanel" id="p-dae" aria-labelledby="t-dae" hidden>
+    <div class="path">File ← Export ← 3D Model ← <b>COLLADA (*.dae)</b> ← Options. النتيجة ملف ‎.dae + فولدر صور بنفس الاسم؛ ابعت الاتنين.</div>
+    <div class="tw"><table><thead><tr><th>الإعداد</th><th>القيمة</th></tr></thead><tbody>
+      <tr><td>Export Two-Sided Faces</td><td><span class="pill on">✓ مفعّل</span></td></tr>
+      <tr><td>Export Edges</td><td><span class="pill off">✗ مقفول</span></td></tr>
+      <tr><td>Triangulate All Faces</td><td><span class="pill on">✓ مفعّل</span></td></tr>
+      <tr><td>Export Only Selection Set</td><td><span class="pill off">✗ مقفول</span></td></tr>
+      <tr><td>Export Hidden Geometry</td><td><span class="pill off">✗ مقفول</span></td></tr>
+      <tr><td>Preserve Component Hierarchies</td><td><span class="pill on">✓ مفعّل</span></td></tr>
+      <tr><td>Export Texture Maps</td><td><span class="pill on">✓ مفعّل</span></td></tr>
+      <tr><td>Use "Color By Tag" Materials</td><td><span class="pill off">✗ مقفول</span></td></tr>
+      <tr><td>Preserve Credits</td><td><span class="pill off">✗ مقفول</span></td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tabpanel" role="tabpanel" id="p-obj" aria-labelledby="t-obj" hidden>
+    <div class="path">File ← Export ← 3D Model ← <b>OBJ (*.obj)</b> ← Options. النتيجة ‎.obj + ‎.mtl + فولدر صور؛ ابعت التلاتة.</div>
+    <div class="tw"><table><thead><tr><th>الإعداد</th><th>القيمة</th></tr></thead><tbody>
+      <tr><td>Triangulate All Faces</td><td><span class="pill on">✓ مفعّل</span></td></tr>
+      <tr><td>Export Two-Sided Faces</td><td><span class="pill on">✓ مفعّل</span></td></tr>
+      <tr><td>Export Edges</td><td><span class="pill off">✗ مقفول</span></td></tr>
+      <tr><td>Export Texture Maps</td><td><span class="pill on">✓ مفعّل</span></td></tr>
+      <tr><td>Swap YZ Coordinates</td><td><span class="pill off">✗ مقفول</span> <span class="example">بتتظبط عندي</span></td></tr>
+      <tr><td>Units</td><td>Meters</td></tr>
+    </tbody></table></div>
+    <div class="note">OBJ بيحتفظ بالـ Groups لكن ممكن يضيّع أسماء الـ Tags. لو هتستخدمه، خلّي أسماء الـ Groups نفسها تبدأ باسم المرحلة، زي <code>04_Columns_C1</code>.</div>
+  </div>
+</section>
+
+<!-- F delivery -->
+<section id="delivery">
+  <div class="sec-head"><span class="sec-k">F</span><h2>التسليم</h2><span class="owner you">أنت</span></div>
+  <div class="cols">
+    <div class="panel">
+      <h3>أسماء الملفات</h3>
+      <div class="fgrid">
+        <div class="f"><label for="n-slug">اسم المشروع بالإنجليزي</label><input type="text" id="n-slug" value="private-villa" dir="ltr"></div>
+        <div class="f"><label for="n-ver">الإصدار</label><input type="number" id="n-ver" min="1" value="1"></div>
+        <div class="f"><label for="n-fmt">الصيغة</label><select id="n-fmt"><option value="glb">GLB</option><option value="dae">DAE</option><option value="obj">OBJ</option></select></div>
+      </div>
+      <div class="out"><pre class="ltr" id="n-out"></pre><button class="cp" type="button" data-copy="n-out">نسخ</button></div>
+    </div>
+    <div class="panel">
+      <h3>طريقة الإرسال</h3>
+      <div class="tw" style="border:0;background:none"><table>
+        <tbody>
+          <tr><td><b>إرفاق في الشات</b></td><td>الملفات أقل من 30 ميجا</td></tr>
+          <tr><td><b>"+" ← Add folder</b></td><td>ملفات أكبر أو فولدر صور كتير، من تطبيق Claude على الكمبيوتر</td></tr>
+          <tr><td><b>ZIP</b></td><td>لو DAE أو OBJ مع فولدر صور</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <h3>معلومات المشروع</h3>
+  <p>املا النموذج، وانسخ النص الجاهز وابعته مع الموديل. القيم الموجودة مثال للفيلا الخاصة.</p>
+  <div class="panel">
+    <div class="fgrid">
+      <div class="f"><label for="p-name">اسم المشروع</label><input type="text" id="p-name" value="الفيلا الخاصة"></div>
+      <div class="f"><label for="p-floors">عدد الأدوار</label><input type="text" id="p-floors" value="أرضي + أول + سطح"></div>
+      <div class="f"><label for="p-area">المساحة التقريبية</label><input type="text" id="p-area" value=""></div>
+      <div class="f"><label for="p-city">الموقع / المدينة</label><input type="text" id="p-city" value=""></div>
+      <div class="f"><label for="p-style">الطراز</label><input type="text" id="p-style" value="معاصر"></div>
+      <div class="f"><label for="p-theme">ألوان العرض</label><select id="p-theme"><option>الاتنين</option><option>فاتح</option><option>غامق</option></select></div>
+      <div class="f"><label for="p-rights">ملكية الموديل</label><select id="p-rights"><option>ملكي</option><option>مشروع عميل وعندي إذن بالنشر</option><option>مشروع عميل ومفيش إذن لسه</option></select></div>
+    </div>
+    <div class="fgrid" style="margin-top:12px">
+      <div class="f"><label for="p-show">نصوص لازم تظهر في الفيديو</label><textarea id="p-show"></textarea></div>
+      <div class="f"><label for="p-hide">نصوص ممنوع تظهر (اسم مالك، عنوان…)</label><textarea id="p-hide"></textarea></div>
+    </div>
+    <div class="res" id="p-warn"></div>
+    <div class="out rtl"><pre id="p-out"></pre><button class="cp" type="button" data-copy="p-out">نسخ</button></div>
+  </div>
+</section>
+
+<!-- 09 processing -->
+<section id="processing">
+  <div class="sec-head"><span class="sec-k">09</span><h2>بعد التسليم: التحويل والضغط</h2><span class="owner">Claude</span></div>
+  <p>الجزء ده عندي، ومكتوب هنا عشان تعرف بالظبط إيه اللي هيحصل للموديل.</p>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>الخطوة</th><th>الأداة</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>قراءة الملف والتأكد من الوحدات والمحاور</td><td>Blender / Assimp</td></tr>
+      <tr><td class="num">2</td><td>فحص الأسطح المقلوبة والمكررة وإصلاحها</td><td>Blender</td></tr>
+      <tr><td class="num">3</td><td>تجميع العناصر حسب الـ Tags والأدوار</td><td>سكريبت مخصص</td></tr>
+      <tr><td class="num">4</td><td>دمج العناصر المتشابهة لتقليل عدد الرسومات</td><td>glTF-Transform</td></tr>
+      <tr><td class="num">5</td><td>تبسيط الأسطح الزايدة من غير تغيير الشكل</td><td>Meshoptimizer</td></tr>
+      <tr><td class="num">6</td><td>ضغط الشكل الهندسي</td><td>Draco أو Meshopt</td></tr>
+      <tr><td class="num">7</td><td>تحويل الصور إلى WebP أو KTX2 وتصغيرها</td><td>glTF-Transform</td></tr>
+      <tr><td class="num">8</td><td>تصدير نسختين: سطح المكتب والموبايل</td><td>glTF-Transform</td></tr>
+    </tbody>
+  </table></div>
+  <div class="cols" style="margin-top:16px">
+    <div class="panel">
+      <h3>أهداف الحجم النهائي</h3>
+      <div class="res">
+        <div class="res-row"><span>سطح المكتب</span><span><span class="pill ok">≤ 2 ميجا</span> <span class="pill warn">حد 4</span></span></div>
+        <div class="res-row"><span>الموبايل</span><span><span class="pill ok">≤ 1 ميجا</span> <span class="pill warn">حد 2</span></span></div>
+      </div>
+      <p style="margin-top:12px;font-size:14px;color:var(--muted)">لو الموديل ما وصلش للأهداف دي بعد الضغط، هبلّغك بالرقم الفعلي وأقترح إيه يتشال قبل ما نكمل.</p>
+    </div>
+    <div class="panel">
+      <h3>تقرير التحويل اللي هتستلمه</h3>
+      <ul style="margin:0;padding-inline-start:18px">
+        <li>الحجم قبل وبعد</li>
+        <li>عدد الأسطح قبل وبعد</li>
+        <li>المراحل اللي اتعرفت، وأي مرحلة ناقصة</li>
+        <li>المشاكل اللي اتصلحت (أسطح مقلوبة، خامات ناقصة…)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 hero -->
+<section id="hero">
+  <div class="sec-head"><span class="sec-k">10</span><h2>الهيرو التفاعلي على الموقع</h2><span class="owner">Claude</span></div>
+  <p>نفس ترتيب المراحل اللي في <a href="#tags">معاينة الطبقات</a>. النصوص مأخوذة من مراحل المقدمة الحالية على af4ai.com، وتتعدل براحتك.</p>
+  <div class="tw"><table>
+    <thead><tr><th>السكرول</th><th>المرحلة</th><th>الحركة</th><th>النص</th></tr></thead>
+    <tbody>
+      <tr><td class="num">0–10%</td><td><code>01_Site</code> <code>02_Survey</code></td><td>الأرض تظهر، نقاط الرفع تنور</td><td>الرفع المساحي: ابدأ من الأرض كما هي</td></tr>
+      <tr><td class="num">10–30%</td><td><code>03</code> → <code>05</code></td><td>الأساسات تطلع، الأعمدة ترتفع</td><td>الهيكل الإنشائي: أدوار ترتفع على أساس سليم</td></tr>
+      <tr><td class="num">30–50%</td><td><code>06_Slabs</code></td><td>البلاطات دور ورا دور</td><td>—</td></tr>
+      <tr><td class="num">50–70%</td><td><code>07_Walls</code> <code>08_Openings</code></td><td>الحوائط تتقفل، الزجاج يظهر</td><td>الفكرة والكتلة: شكّل الكتلة قبل أن تُبنى</td></tr>
+      <tr><td class="num">70–90%</td><td><code>09_Facade</code> <code>10_Roof</code></td><td>التشطيب والخامات النهائية</td><td>التشطيب والداخلي: من الهيكل إلى مساحة تُسكن</td></tr>
+      <tr><td class="num">90–100%</td><td><code>11_Landscape</code></td><td>الحديقة والإضاءة، الكاميرا تبعد</td><td>العرض والتسويق: اختر من أين تبدأ</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="cols" style="margin-top:16px">
+    <div class="panel">
+      <h3>التفاعل</h3>
+      <ul style="margin:0;padding-inline-start:18px">
+        <li><b>السحب:</b> لف حوالين المبنى، بحدود زاوية عشان الزائر ما يتوهش.</li>
+        <li><b>المؤشر:</b> ميلان خفيف للكاميرا وإضاءة تتبعه.</li>
+        <li><b>بعد ثانيتين من غير تفاعل:</b> الكاميرا ترجع لمسارها.</li>
+      </ul>
+      <h3>التقنية</h3>
+      <ul style="margin:0;padding-inline-start:18px">
+        <li>Three.js من CDN، ويتحمّل عند الحاجة بس.</li>
+        <li>كود الهيرو في ملف منفصل، ما يأثرش على باقي الموقع.</li>
+        <li>متوافق مع RTL والوضع الفاتح والغامق.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>الأداء والتحميل</h3>
+      <div class="res">
+        <div class="res-row"><span>أول فتح للصفحة</span><span class="pill ok">صورة ثابتة &lt; 150 كيلو</span></div>
+        <div class="res-row"><span>بعد ظهور الصفحة</span><span class="pill ok">الموديل في الخلفية</span></div>
+        <div class="res-row"><span>موبايل</span><span class="pill ok">نسخة خفيفة</span></div>
+        <div class="res-row"><span>نت بطيء أو Save-Data</span><span class="pill warn">صورة + زر "اعرض 3D"</span></div>
+        <div class="res-row"><span>تقليل الحركة</span><span class="pill warn">مراحل ثابتة</span></div>
+        <div class="res-row"><span>متصفح من غير WebGL</span><span class="pill bad">صورة ثابتة + نصوص</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 video -->
+<section id="video">
+  <div class="sec-head"><span class="sec-k">11</span><h2>الفيديو التسويقي</h2><span class="owner">Claude</span></div>
+  <h3>الستوري بورد · 20 ثانية</h3>
+  <p class="example">اضغط على أي مقطع عشان تشوف تفاصيله.</p>
+  <div class="sb" id="sb" role="group" aria-label="مقاطع الفيديو"></div>
+  <div class="sb-axis"><span>0s</span><span>5s</span><span>10s</span><span>15s</span><span>20s</span></div>
+  <dl class="sb-detail" id="sb-detail"></dl>
+
+  <div class="cols" style="margin-top:20px">
+    <div class="panel">
+      <h3>طريقة الرندر</h3>
+      <ul style="margin:0;padding-inline-start:18px">
+        <li>فريم بفريم بتوقيت ثابت، مش تسجيل شاشة؛ النتيجة ناعمة ومش معتمدة على قوة أي جهاز.</li>
+        <li>نفس المشهد بيترندر 3 مرات بكاميرا مختلفة لكل مقاس، عشان المبنى يفضل في نص الكادر.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>إعدادات التصدير</h3>
+      <div class="tw" style="border:0;background:none"><table><tbody>
+        <tr><td>الكوديك</td><td>H.264 (High Profile)</td></tr>
+        <tr><td>الألوان</td><td><code>yuv420p</code></td></tr>
+        <tr><td>الفريمات</td><td>60 fps، أو 30 لحجم أقل</td></tr>
+        <tr><td>معدل البيانات</td><td>1080p: حوالي 10–12 Mbps</td></tr>
+        <tr><td>الصوت</td><td>من غير صوت، إلا لو عندك موسيقى مرخّصة</td></tr>
+        <tr><td>الحجم</td><td>15–30 ميجا للملف</td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <h3>النشر</h3>
+  <div class="tw"><table>
+    <tbody>
+      <tr><td><b>فيسبوك</b></td><td>4:5 كبوست، و9:16 كريلز. أول سطر في البوست سؤال أو رقم، مش "شوفوا الفيديو".</td></tr>
+      <tr><td><b>لينكدإن</b></td><td>16:9، والبوست فيه قصة المشروع والأداة اللي اتعمل بيها.</td></tr>
+      <tr><td><b>الصوت</b></td><td>الفيديو مصمم يتفهم وهو صامت؛ النصوص جواه فمش محتاج ترجمة تلقائية.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 12 qa -->
+<section id="qa">
+  <div class="sec-head"><span class="sec-k">12</span><h2>مراجعة الجودة النهائية</h2></div>
+  <div class="cols">
+    <div class="panel">
+      <h3>الموديل <span class="grp-prog" data-prog="qa-m"></span></h3>
+      <ul class="chk-list" data-group="qa-m">
+        <li><label class="chk"><input type="checkbox" id="c-qam-1"><span>مفيش أسطح مختفية أو مقلوبة من أي زاوية</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qam-2"><span>مفيش وميض في أي سطح</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qam-3"><span>الخامات صح، والزجاج شفاف</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qam-4"><span>كل المراحل بتظهر بالترتيب الصح</span></label></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>الهيرو <span class="grp-prog" data-prog="qa-h"></span></h3>
+      <ul class="chk-list" data-group="qa-h">
+        <li><label class="chk"><input type="checkbox" id="c-qah-1"><span>الصورة الثابتة بتظهر في أقل من ثانية</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qah-2"><span>الحركة ناعمة على لابتوب متوسط</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qah-3"><span>شغال على موبايل أندرويد متوسط</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qah-4"><span>تقليل الحركة شغال</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qah-5"><span>النصوص العربي سليمة ومحاذية صح</span></label></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>الفيديو <span class="grp-prog" data-prog="qa-v"></span></h3>
+      <ul class="chk-list" data-group="qa-v">
+        <li><label class="chk"><input type="checkbox" id="c-qav-1"><span>المبنى في نص الكادر في التلات مقاسات</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qav-2"><span>النصوص مقروءة على الموبايل</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qav-3"><span>اسم الموقع ظاهر في الختام</span></label></li>
+        <li><label class="chk"><input type="checkbox" id="c-qav-4"><span>الرفع على فيسبوك ولينكدإن من غير ضغط سيء</span></label></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 13 revit -->
+<section id="revit">
+  <div class="sec-head"><span class="sec-k">13</span><h2>ملحق: موديلات Revit</h2></div>
+  <div class="key">موديل Revit غالبًا مش محتاج تقسيم Tags يدوي، لأن الـ Categories بتقوم بالدور ده.</div>
+  <div class="tw"><table>
+    <tbody>
+      <tr><td><b>صيغة التصدير</b></td><td><b>FBX</b> (File ← Export ← FBX) أو <b>IFC</b></td></tr>
+      <tr><td><b>العرض قبل التصدير</b></td><td>3D View، Detail Level: Medium، مع إخفاء الفرش والـ Annotations</td></tr>
+      <tr><td><b>المراحل</b></td><td>من الـ Categories: Structural Foundations ← Structural Columns ← Structural Framing ← Floors ← Walls ← Windows/Doors ← Roofs ← Site/Planting</td></tr>
+      <tr><td><b>الأدوار</b></td><td>من الـ Levels</td></tr>
+      <tr><td><b>ميزة IFC</b></td><td>بيحتفظ بالـ Categories والـ Levels بدقة أعلى، فالتقسيم أدق</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 14 service -->
+<section id="service">
+  <div class="sec-head"><span class="sec-k">14</span><h2>ملحق: تحويل المسار إلى خدمة مدفوعة</h2></div>
+  <p>بعد ما التجربة الأولى تنجح، نفس المسار ممكن يتقدم كخدمة للمكاتب الهندسية.</p>
+  <div class="cols">
+    <div class="panel">
+      <h3>الباقة</h3>
+      <div class="tw" style="border:0;background:none"><table><tbody>
+        <tr><td>المدخل</td><td>موديل SketchUp أو Revit مجهز حسب الدليل ده</td></tr>
+        <tr><td>مخرج 1</td><td>هيرو 3D تفاعلي لموقع المكتب</td></tr>
+        <tr><td>مخرج 2</td><td>فيديو تسويقي بالتلات مقاسات</td></tr>
+        <tr><td>مخرج 3</td><td>صور ثابتة عالية الجودة لكل مرحلة</td></tr>
+        <tr><td>التعديلات</td><td>عدد جولات محدد مسبقًا</td></tr>
+      </tbody></table></div>
+    </div>
+    <div class="panel">
+      <h3>الميزة التنافسية</h3>
+      <ul style="margin:0;padding-inline-start:18px">
+        <li>عربي من الأساس، مش ترجمة لقالب أجنبي.</li>
+        <li>قصة بناء هندسية حقيقية (رفع ← هيكل ← تشطيب).</li>
+        <li>مشروع العميل نفسه، مش موديل عام.</li>
+      </ul>
+      <h3>قواعد الخدمة</h3>
+      <ul style="margin:0;padding-inline-start:18px">
+        <li>تسليم محدد ومكتوب مسبقًا، من غير وعود مفتوحة.</li>
+        <li>العميل يقر بملكيته للموديل أو بحقه في نشره.</li>
+        <li>الدليل ده نفسه مرجع تجهيز الموديل للعميل.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 15 final -->
+<section id="final">
+  <div class="sec-head"><span class="sec-k">15</span><h2>فحص سريع قبل الإرسال</h2><span class="owner you">قبل كل تصدير</span></div>
+  <p>عدّي على البنود دي قبل ما تبعت أي موديل. <span class="grp-prog" data-prog="final"></span></p>
+  <ul class="chk-list" data-group="final">
+    <li><label class="chk"><input type="checkbox" id="c-fin-1"><span>الوحدات <b>متر</b></span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-2"><span>نقطة الأصل في منتصف المبنى عند منسوب الصفر</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-3"><span>كل العناصر Groups أو Components</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-4"><span>الـ Tags بالأسماء المعتمدة (<code>01_Site</code> … <code>11_Landscape</code>)</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-5"><span>الـ Tags على الـ Groups، مش على الأسطح</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-6"><span>الأدوار مسمّاة (<code>GF</code>، <code>F1</code>، <code>Roof</code>…)</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-7"><span>مفيش أسطح زرقاء ظاهرة من برا في Monochrome</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-8"><span>الخامات مسمّاة بالبادئات المعتمدة</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-9"><span>الفرش والبني آدمين والعربيات اتحذفوا</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-10"><span>Purge Unused اتعمل</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-11"><span>عدد الأسطح أقل من 500,000</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-12"><span>اتصدّر GLB أو DAE أو OBJ بالإعدادات الموضحة</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-13"><span>ملف ‎.skp المنضّف مرفق</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-14"><span>نموذج معلومات المشروع متملي</span></label></li>
+    <li><label class="chk"><input type="checkbox" id="c-fin-15"><span>عندك حق نشر الموديل</span></label></li>
+  </ul>
+  <div class="reset-row">
+    <button type="button" id="reset" class="danger">امسح كل العلامات</button>
+    <button type="button" id="reset-yes" class="primary" hidden>تأكيد المسح</button>
+    <span class="example" id="reset-msg"></span>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer><span>AF4AI · م. أحمد الفولي</span><span class="mono">af4ai.com</span></footer>
+</div>
+
+<script>
+(function(){
+  var KEY='af4ai-3d-pipeline-v1';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+  var state=load();
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- tags table ---------- */
+  var TAGS=[
+    {at:0,tag:'01_Site',ar:'الأرض، حدود القطعة، الأرصفة، المناسيب',cap:'الرفع المساحي: ابدأ من الأرض كما هي'},
+    {at:5,tag:'02_Survey',ar:'نقاط ومحاور الرفع (اختياري، أشكال بسيطة)',cap:'الرفع المساحي: ابدأ من الأرض كما هي'},
+    {at:10,tag:'03_Foundations',ar:'القواعد، السملات، الحوائط الساندة',cap:'الهيكل الإنشائي: أدوار ترتفع على أساس سليم'},
+    {at:17,tag:'04_Columns',ar:'الأعمدة',cap:'الهيكل الإنشائي: أدوار ترتفع على أساس سليم'},
+    {at:24,tag:'05_Beams',ar:'الكمرات (لو مرسومة منفصلة)',cap:'الهيكل الإنشائي: أدوار ترتفع على أساس سليم'},
+    {at:30,tag:'06_Slabs',ar:'البلاطات والسلالم، دور ورا دور',cap:'البلاطات تنزل دور ورا دور'},
+    {at:50,tag:'07_Walls',ar:'حوائط المباني',cap:'الفكرة والكتلة: شكّل الكتلة قبل أن تُبنى'},
+    {at:60,tag:'08_Openings',ar:'الشبابيك والأبواب والزجاج',cap:'الفكرة والكتلة: شكّل الكتلة قبل أن تُبنى'},
+    {at:70,tag:'09_Facade',ar:'التكسيات، البرجولات، الدراوي، الكرانيش',cap:'التشطيب والداخلي: من الهيكل إلى مساحة تُسكن'},
+    {at:80,tag:'10_Roof',ar:'السطح والعزل والكرانيش العلوية',cap:'التشطيب والداخلي: من الهيكل إلى مساحة تُسكن'},
+    {at:90,tag:'11_Landscape',ar:'الحديقة، البيسين، الأشجار الخفيفة، الإضاءة الخارجية',cap:'العرض والتسويق: اختر من أين تبدأ'}
+  ];
+  var tb=document.getElementById('tag-rows');
+  TAGS.forEach(function(t){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><code>'+t.tag+'</code></td><td>'+t.ar+'</td><td class="num">'+t.at+'%</td><td><button class="cp" type="button">نسخ</button></td>';
+    tr.querySelector('button').addEventListener('click',function(e){copy(t.tag,e.currentTarget)});
+    tb.appendChild(tr);
+  });
+  document.getElementById('copy-all-tags').addEventListener('click',function(e){
+    copy(TAGS.map(function(t){return t.tag}).join('\n'),e.currentTarget);
+  });
+
+  /* ---------- copy helper ---------- */
+  function flash(btn){if(!btn)return;var old=btn.textContent;btn.textContent='اتنسخ';btn.classList.add('done');setTimeout(function(){btn.textContent=old;btn.classList.remove('done')},1400)}
+  function selectNode(node){try{var r=document.createRange();r.selectNodeContents(node);var s=window.getSelection();s.removeAllRanges();s.addRange(r)}catch(e){}}
+  function copy(text,btn,node){
+    try{
+      navigator.clipboard.writeText(text).then(function(){flash(btn)},function(){if(node)selectNode(node);if(btn){btn.textContent='اتحدد، انسخ يدويًا';setTimeout(function(){btn.textContent='نسخ'},2000)}});
+    }catch(e){if(node)selectNode(node)}
+  }
+  document.querySelectorAll('[data-copy]').forEach(function(b){
+    b.addEventListener('click',function(){var n=document.getElementById(b.getAttribute('data-copy'));copy(n.textContent,b,n)});
+  });
+
+  /* ---------- stage preview ---------- */
+  var els=[].slice.call(document.querySelectorAll('#villa .el'));
+  var range=document.getElementById('s-range'),pct=document.getElementById('s-pct'),tagEl=document.getElementById('s-tag'),cap=document.getElementById('s-cap');
+  function setStage(v){
+    v=+v;var latest=null;
+    els.forEach(function(el){var at=+el.getAttribute('data-at');var on=v>=at;el.classList.toggle('off',!on);if(on&&(latest===null||at>latest))latest=at});
+    els.forEach(function(el){el.classList.toggle('new',+el.getAttribute('data-at')===latest&&v<100)});
+    var cur=TAGS[0];TAGS.forEach(function(t){if(v>=t.at)cur=t});
+    pct.textContent=Math.round(v);tagEl.textContent=cur.tag;cap.textContent=cur.cap;
+  }
+  range.addEventListener('input',function(){stop();setStage(range.value)});
+  var raf=null;
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=null}}
+  document.getElementById('s-play').addEventListener('click',function(){
+    stop();
+    if(reduce){range.value=100;setStage(100);return}
+    var t0=null,dur=7000;
+    function step(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/dur);var v=p*100;range.value=v;setStage(v);if(p<1)raf=requestAnimationFrame(step);else raf=null}
+    raf=requestAnimationFrame(step);
+  });
+  document.getElementById('s-reset').addEventListener('click',function(){stop();range.value=0;setStage(0)});
+  setStage(100);
+
+  /* ---------- floors generator ---------- */
+  var fUp=document.getElementById('f-up'),fBase=document.getElementById('f-base'),fRoof=document.getElementById('f-roof'),fOut=document.getElementById('f-out');
+  function floors(){
+    var n=Math.max(0,Math.min(20,parseInt(fUp.value,10)||0));var L=[];
+    if(fBase.checked)L.push('B1');L.push('GF');for(var i=1;i<=n;i++)L.push('F'+i);if(fRoof.checked)L.push('Roof');
+    fOut.textContent='06_Slabs\n'+L.map(function(x){return '  Slab_'+x}).join('\n')+'\n\n07_Walls\n'+L.map(function(x){return '  Walls_'+x}).join('\n');
+  }
+  [fUp,fBase,fRoof].forEach(function(x){x.addEventListener('input',floors);x.addEventListener('change',floors)});floors();
+
+  /* ---------- budget ---------- */
+  var B=[
+    {id:'b-faces',name:'عدد الأسطح',target:200000,max:500000,fmt:function(v){return v.toLocaleString('en-US')}},
+    {id:'b-size',name:'حجم ‎.skp',target:30,max:80,unit:' ميجا',fmt:function(v){return v}},
+    {id:'b-mats',name:'عدد الخامات',target:25,max:40,fmt:function(v){return v}}
+  ];
+  var bRes=document.getElementById('b-res');
+  function budget(){
+    bRes.innerHTML='';var over=false;
+    B.forEach(function(b){
+      var v=parseFloat(document.getElementById(b.id).value);var row=document.createElement('div');row.className='res-row';
+      var cls,txt;
+      if(isNaN(v)){cls='warn';txt='اكتب الرقم'}
+      else if(v<b.target){cls='ok';txt='ضمن الهدف'}
+      else if(v<=b.max){cls='warn';txt='مقبول، والأفضل يقل'}
+      else{cls='bad';txt='أكبر من الحد';over=true}
+      var lim='الهدف أقل من '+b.fmt(b.target)+(b.unit||'')+' · الحد '+b.fmt(b.max)+(b.unit||'');
+      row.innerHTML='<span>'+b.name+'<br><small style="color:var(--muted)">'+lim+'</small></span><span class="pill '+cls+'">'+txt+'</span>';
+      bRes.appendChild(row);
+    });
+    if(over){var n=document.createElement('div');n.className='note';n.style.margin='4px 0 0';n.textContent='ابعتلي الأرقام دي قبل ما ترفع الملف، وأقولك تشيل إيه الأول.';bRes.appendChild(n)}
+  }
+  B.forEach(function(b){document.getElementById(b.id).addEventListener('input',budget)});budget();
+
+  /* ---------- file names ---------- */
+  var nSlug=document.getElementById('n-slug'),nVer=document.getElementById('n-ver'),nFmt=document.getElementById('n-fmt'),nOut=document.getElementById('n-out');
+  function names(){
+    var s=(nSlug.value||'project').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'project';
+    var base='af4ai_'+s+'_v'+(Math.max(1,parseInt(nVer.value,10)||1));var f=nFmt.value;var L=[];
+    if(f==='glb')L=[base+'.glb',base+'.skp'];
+    else if(f==='dae')L=[base+'.dae',base+'.skp',base+'_textures.zip'];
+    else L=[base+'.obj',base+'.mtl',base+'.skp',base+'_textures.zip'];
+    nOut.textContent=L.join('\n');
+  }
+  [nSlug,nVer,nFmt].forEach(function(x){x.addEventListener('input',names);x.addEventListener('change',names)});names();
+
+  /* ---------- project info ---------- */
+  var P=[['p-name','اسم المشروع'],['p-floors','عدد الأدوار'],['p-area','المساحة التقريبية'],['p-city','الموقع / المدينة'],['p-style','الطراز'],['p-theme','الألوان المفضلة للعرض'],['p-show','نصوص لازم تظهر في الفيديو'],['p-hide','نصوص ممنوع تظهر'],['p-rights','ملكية الموديل']];
+  var pOut=document.getElementById('p-out'),pWarn=document.getElementById('p-warn');
+  var saved=state.form||{};
+  P.forEach(function(p){var el=document.getElementById(p[0]);if(saved[p[0]]!=null)el.value=saved[p[0]]});
+  function info(){
+    var f={};pOut.textContent=P.map(function(p){var v=document.getElementById(p[0]).value.trim();f[p[0]]=v;return p[1]+': '+(v||'—')}).join('\n');
+    state.form=f;save(state);
+    var r=document.getElementById('p-rights').value;
+    pWarn.innerHTML=r.indexOf('مفيش')>-1?'<div class="note" style="margin:8px 0 0">استنى الإذن من العميل قبل ما تبعت الموديل لاستخدامه في التسويق.</div>':'';
+  }
+  P.forEach(function(p){var el=document.getElementById(p[0]);el.addEventListener('input',info);el.addEventListener('change',info)});info();
+
+  /* ---------- tabs ---------- */
+  var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+  function pick(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;document.getElementById(x.getAttribute('aria-controls')).hidden=!on});state.tab=t.id;save(state)}
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){pick(t)});
+    t.addEventListener('keydown',function(e){var d=e.key==='ArrowLeft'?1:e.key==='ArrowRight'?-1:0;if(d){var n=tabs[(i+d+tabs.length)%tabs.length];pick(n);n.focus()}});
+  });
+  if(state.tab&&document.getElementById(state.tab))pick(document.getElementById(state.tab));
+
+  /* ---------- storyboard ---------- */
+  var SB=[
+    {a:0,b:2,scene:'لوجو AF4AI على خلفية الهوية',txt:'—',tags:'—'},
+    {a:2,b:5,scene:'الأرض ونقاط الرفع، كاميرا عالية',txt:'من أرض خالية…',tags:'01_Site · 02_Survey'},
+    {a:5,b:8,scene:'الأساسات والأعمدة ترتفع',txt:'هيكل على أساس سليم',tags:'03_Foundations · 04_Columns · 05_Beams'},
+    {a:8,b:11,scene:'البلاطات دور ورا دور، والكاميرا تلف',txt:'—',tags:'06_Slabs'},
+    {a:11,b:14,scene:'الحوائط والزجاج والواجهات',txt:'—',tags:'07_Walls · 08_Openings · 09_Facade'},
+    {a:14,b:17,scene:'اللاندسكيب والإضاءة، لفة كاملة',txt:'…إلى مبنى يُسلَّم',tags:'10_Roof · 11_Landscape'},
+    {a:17,b:20,scene:'بطاقة ختام: 12 كتاب · 40 مشروع · 6 منصات',txt:'af4ai.com',tags:'—'}
+  ];
+  var sb=document.getElementById('sb'),sbd=document.getElementById('sb-detail');
+  function showSeg(i){
+    [].forEach.call(sb.children,function(b,j){b.setAttribute('aria-pressed',j===i)});
+    var s=SB[i];
+    sbd.innerHTML='<dt>الوقت</dt><dd class="mono">0:'+String(s.a).padStart(2,'0')+' – 0:'+String(s.b).padStart(2,'0')+'</dd><dt>المشهد</dt><dd>'+s.scene+'</dd><dt>النص على الشاشة</dt><dd>'+s.txt+'</dd><dt>المراحل</dt><dd class="mono">'+s.tags+'</dd>';
+  }
+  SB.forEach(function(s,i){var b=document.createElement('button');b.type='button';b.style.setProperty('--d',s.b-s.a);b.textContent=s.a+'–'+s.b+'s';b.setAttribute('aria-label','المقطع من '+s.a+' إلى '+s.b+' ثانية');b.addEventListener('click',function(){showSeg(i)});sb.appendChild(b)});
+  showSeg(1);
+
+  /* ---------- checklists ---------- */
+  var checks=state.checks||{};
+  var boxes=[].slice.call(document.querySelectorAll('.chk input[type=checkbox]'));
+  boxes.forEach(function(b){if(checks[b.id])b.checked=true;b.addEventListener('change',function(){checks[b.id]=b.checked;state.checks=checks;save(state);progress()})});
+  function progress(){
+    var done=boxes.filter(function(b){return b.checked}).length;
+    document.getElementById('m-num').textContent=done+' / '+boxes.length;
+    document.getElementById('m-bar').style.width=(boxes.length?done/boxes.length*100:0)+'%';
+    document.querySelectorAll('[data-prog]').forEach(function(p){
+      var g=document.querySelector('[data-group="'+p.getAttribute('data-prog')+'"]');if(!g)return;
+      var all=g.querySelectorAll('input[type=checkbox]'),c=g.querySelectorAll('input[type=checkbox]:checked');
+      p.textContent=c.length+'/'+all.length;
+    });
+  }
+  progress();
+  var rs=document.getElementById('reset'),ry=document.getElementById('reset-yes'),rm=document.getElementById('reset-msg'),rt=null;
+  rs.addEventListener('click',function(){ry.hidden=false;rm.textContent='هيتمسح كل العلامات اللي في الصفحة.';clearTimeout(rt);rt=setTimeout(function(){ry.hidden=true;rm.textContent=''},5000)});
+  ry.addEventListener('click',function(){boxes.forEach(function(b){b.checked=false});checks={};state.checks=checks;save(state);progress();ry.hidden=true;rm.textContent='اتمسحت كل العلامات.'});
+
+  /* ---------- nav highlight ---------- */
+  var links=[].slice.call(document.querySelectorAll('nav.idx a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('cur',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-20% 0px -70% 0px'});
+    document.querySelectorAll('main section').forEach(function(s){io.observe(s)});
+  }
+})();
+</script>
+</body>
+</html>

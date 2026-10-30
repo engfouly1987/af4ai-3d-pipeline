@@ -1,0 +1,48 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#dfe6ea}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
+const Q=new URLSearchParams(location.search);
+const num=(k,d)=>Q.has(k)?Q.get(k).split(',').map(Number):d;
+const mode=Q.get('mode')||'mat';               // mat | clay
+const R=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+R.setSize(innerWidth,innerHeight);R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=+(Q.get('exp')||1.0);
+R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;R.localClippingEnabled=true;document.body.appendChild(R.domElement);
+const S=new THREE.Scene();
+// sky gradient
+const cv=document.createElement('canvas');cv.width=2;cv.height=256;const cx=cv.getContext('2d');const gr=cx.createLinearGradient(0,0,0,256);
+gr.addColorStop(0,'#8fb3cf');gr.addColorStop(.6,'#cfdbe2');gr.addColorStop(1,'#efe3cc');cx.fillStyle=gr;cx.fillRect(0,0,2,256);
+const sky=new THREE.CanvasTexture(cv);sky.colorSpace=THREE.SRGBColorSpace;S.background=Q.get('bg')==='white'?new THREE.Color('#ffffff'):sky;
+S.add(new THREE.HemisphereLight('#dfe9f2','#b9a88c',1.1));
+const SH=+(Q.get('sh')||70);const sun=new THREE.DirectionalLight('#ffe2b8',3.2);const sd=num('sun',[-60,55,70]);sun.position.set(...sd);sun.target.position.set(...num('st',[12,0,12]));
+sun.castShadow=true;sun.shadow.mapSize.set(4096,4096);Object.assign(sun.shadow.camera,{left:-SH,right:SH,top:SH,bottom:-SH,near:1,far:SH*5});sun.shadow.bias=-.0004;sun.shadow.normalBias=.03;
+S.add(sun,sun.target);
+const clips=[];
+if(Q.has('planY')){clips.push(new THREE.Plane(new THREE.Vector3(0,-1,0),+Q.get('planY')));}
+if(Q.has('secX')){clips.push(new THREE.Plane(new THREE.Vector3(-1,0,0),+Q.get('secX')));}
+const hide=(Q.get('hide')||'').split(',').filter(Boolean);
+new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('/out/'+(Q.get('glb')||'sidra.glb'),g=>{
+  g.scene.traverse(o=>{
+    if(hide.some(h=>o.name.startsWith(h)))o.visible=false;
+    if(o.isMesh){o.castShadow=true;o.receiveShadow=true;
+      let m=o.material;
+      if(mode==='clay'){const glass=m.transparent;m=new THREE.MeshStandardMaterial({color:glass?'#9fb3bb':'#f2efe9',roughness:glass?.2:.9,transparent:glass,opacity:glass?.5:1});}
+      else m=m.clone();
+      m.clippingPlanes=clips;m.clipShadows=true;m.side=clips.length?THREE.DoubleSide:THREE.FrontSide;
+      if(m.transparent){m.depthWrite=false;o.castShadow=false;}
+      o.material=m;}
+  });
+  S.add(g.scene);
+  const W=innerWidth,H=innerHeight;let cam;
+  if(Q.get('ortho')){const s=+Q.get('ortho');cam=new THREE.OrthographicCamera(-s*W/H,s*W/H,s,-s,.1,500);}
+  else cam=new THREE.PerspectiveCamera(+(Q.get('fov')||45),W/H,.1,800);
+  cam.position.set(...num('pos',[40,30,70]));
+  if(Q.get('up')==='z')cam.up.set(0,0,-1);
+  cam.lookAt(...num('tgt',[12,15,12]));
+  if(Q.has('shift')){const sh=+Q.get('shift');cam.setViewOffset(W,H,0,H*sh,W,H);} // vertical lens shift (keeps verticals straight)
+  R.render(S,cam);setTimeout(()=>{R.render(S,cam);document.body.classList.add('done')},300);
+});
+</script></body></html>

@@ -1,0 +1,1354 @@
+{
+  "version": 3,
+  "curvedHotelBlocks": 3,
+  "architecturalDetail": "Reference-sequence reconstruction: two-storey terraced villas, broad three-storey hotel ends, barrel-vaulted village, three staggered beach pavilions, shutters, arcades and pergolas",
+  "project": "منتجع الشراع",
+  "units": "metres",
+  "priority": "Visual arrangement of the attached PLAN-01 masterplan; architectural language of EXT-01.",
+  "sourceArea": 250000,
+  "sourceDepth": 550,
+  "visualDevelopedParcelArea": 82411,
+  "frontageApprox": 450,
+  "hotelBlocks": 3,
+  "hotelRoomBays": 220,
+  "hotelStoreys": 3,
+  "villaBuildings": 18,
+  "privateVillaPools": 18,
+  "centralLagoonPools": 1,
+  "beachClubPools": 1,
+  "spaGardens": 1,
+  "notes": [
+    "Conceptual model derived from two image references plus the supplied PDF/JSON, not a surveyed or approved site plan.",
+    "The wide proportions of PLAN-01 take priority. The developed parcel is approximately 450 x 190 m, not the 250000 m2 / 550 m depth in the written brief.",
+    "The model contains 220 furnished hotel room bays across three blocks, not a verified hotel key/area schedule or complete interior fit-out.",
+    "The image-like villa cluster contains 18 villa buildings with private pools; the written target of 150 chalet/villa units is not achieved.",
+    "Hotel room bays are schematic. Circulation cores, lifts, stairs, services, egress and accessible rooms require a coordinated plan.",
+    "The beachfront club follows the drawing but its location relative to the legal coastal setback is unresolved. No valid setback distance is known or claimed.",
+    "Dunes, shoreline, elevations and sea levels are illustrative. Flood, wave run-up, marine structures and coastal approvals have not been assessed.",
+    "Services are placed at the rear east as in the masterplan. The brief contains inconsistent north/south wording; no prevailing wind or utility capacities are established.",
+    "Guest paths, buggy loop and rear service lane are visually differentiated but not traffic-engineered.",
+    "All vegetation consists of lightweight shared mesh components; no external textures are needed."
+  ],
+  "hotelRoomPositions": [
+    {
+      "block": "west",
+      "level": 0,
+      "x": -67.3710535583496,
+      "z": -8
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -54.67105355834961,
+      "z": -8
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -65.47987425726183,
+      "z": -0.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -52.779874257261824,
+      "z": -0.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -63.78428928243459,
+      "z": 7
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -51.0842892824346,
+      "z": 7
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -62.39984994781573,
+      "z": 14.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -49.699849947815736,
+      "z": 14.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -61.420903506165345,
+      "z": 22
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -48.72090350616535,
+      "z": 22
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -60.91416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -48.21416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -60.91416353969642,
+      "z": 37
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -48.21416353969642,
+      "z": 37
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -61.420903506165345,
+      "z": 44.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -48.72090350616535,
+      "z": 44.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -62.39984994781573,
+      "z": 52
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -49.699849947815736,
+      "z": 52
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -63.78428928243459,
+      "z": 59.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -51.0842892824346,
+      "z": 59.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -65.47987425726183,
+      "z": 67
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -52.779874257261824,
+      "z": 67
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -67.3710535583496,
+      "z": 74.5
+    },
+    {
+      "block": "west",
+      "level": 0,
+      "x": -54.67105355834961,
+      "z": 74.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -67.3710535583496,
+      "z": -8
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -54.67105355834961,
+      "z": -8
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -65.47987425726183,
+      "z": -0.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -52.779874257261824,
+      "z": -0.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -63.78428928243459,
+      "z": 7
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -51.0842892824346,
+      "z": 7
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -62.39984994781573,
+      "z": 14.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -49.699849947815736,
+      "z": 14.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -61.420903506165345,
+      "z": 22
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -48.72090350616535,
+      "z": 22
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -60.91416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -48.21416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -60.91416353969642,
+      "z": 37
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -48.21416353969642,
+      "z": 37
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -61.420903506165345,
+      "z": 44.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -48.72090350616535,
+      "z": 44.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -62.39984994781573,
+      "z": 52
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -49.699849947815736,
+      "z": 52
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -63.78428928243459,
+      "z": 59.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -51.0842892824346,
+      "z": 59.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -65.47987425726183,
+      "z": 67
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -52.779874257261824,
+      "z": 67
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -67.3710535583496,
+      "z": 74.5
+    },
+    {
+      "block": "west",
+      "level": 1,
+      "x": -54.67105355834961,
+      "z": 74.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -67.3710535583496,
+      "z": -8
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -54.67105355834961,
+      "z": -8
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -65.47987425726183,
+      "z": -0.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -52.779874257261824,
+      "z": -0.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -63.78428928243459,
+      "z": 7
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -51.0842892824346,
+      "z": 7
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -62.39984994781573,
+      "z": 14.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -49.699849947815736,
+      "z": 14.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -61.420903506165345,
+      "z": 22
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -48.72090350616535,
+      "z": 22
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -60.91416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -48.21416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -60.91416353969642,
+      "z": 37
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -48.21416353969642,
+      "z": 37
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -61.420903506165345,
+      "z": 44.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -48.72090350616535,
+      "z": 44.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -62.39984994781573,
+      "z": 52
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -49.699849947815736,
+      "z": 52
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -63.78428928243459,
+      "z": 59.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -51.0842892824346,
+      "z": 59.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -65.47987425726183,
+      "z": 67
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -52.779874257261824,
+      "z": 67
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -67.3710535583496,
+      "z": 74.5
+    },
+    {
+      "block": "west",
+      "level": 2,
+      "x": -54.67105355834961,
+      "z": 74.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 54.67105355834961,
+      "z": -8
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 67.3710535583496,
+      "z": -8
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 52.779874257261824,
+      "z": -0.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 65.47987425726183,
+      "z": -0.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 51.0842892824346,
+      "z": 7
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 63.78428928243459,
+      "z": 7
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 49.699849947815736,
+      "z": 14.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 62.39984994781573,
+      "z": 14.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 48.72090350616535,
+      "z": 22
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 61.420903506165345,
+      "z": 22
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 48.21416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 60.91416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 48.21416353969642,
+      "z": 37
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 60.91416353969642,
+      "z": 37
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 48.72090350616535,
+      "z": 44.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 61.420903506165345,
+      "z": 44.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 49.699849947815736,
+      "z": 52
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 62.39984994781573,
+      "z": 52
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 51.0842892824346,
+      "z": 59.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 63.78428928243459,
+      "z": 59.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 52.779874257261824,
+      "z": 67
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 65.47987425726183,
+      "z": 67
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 54.67105355834961,
+      "z": 74.5
+    },
+    {
+      "block": "east",
+      "level": 0,
+      "x": 67.3710535583496,
+      "z": 74.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 54.67105355834961,
+      "z": -8
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 67.3710535583496,
+      "z": -8
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 52.779874257261824,
+      "z": -0.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 65.47987425726183,
+      "z": -0.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 51.0842892824346,
+      "z": 7
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 63.78428928243459,
+      "z": 7
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 49.699849947815736,
+      "z": 14.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 62.39984994781573,
+      "z": 14.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 48.72090350616535,
+      "z": 22
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 61.420903506165345,
+      "z": 22
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 48.21416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 60.91416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 48.21416353969642,
+      "z": 37
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 60.91416353969642,
+      "z": 37
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 48.72090350616535,
+      "z": 44.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 61.420903506165345,
+      "z": 44.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 49.699849947815736,
+      "z": 52
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 62.39984994781573,
+      "z": 52
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 51.0842892824346,
+      "z": 59.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 63.78428928243459,
+      "z": 59.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 52.779874257261824,
+      "z": 67
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 65.47987425726183,
+      "z": 67
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 54.67105355834961,
+      "z": 74.5
+    },
+    {
+      "block": "east",
+      "level": 1,
+      "x": 67.3710535583496,
+      "z": 74.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 54.67105355834961,
+      "z": -8
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 67.3710535583496,
+      "z": -8
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 52.779874257261824,
+      "z": -0.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 65.47987425726183,
+      "z": -0.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 51.0842892824346,
+      "z": 7
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 63.78428928243459,
+      "z": 7
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 49.699849947815736,
+      "z": 14.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 62.39984994781573,
+      "z": 14.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 48.72090350616535,
+      "z": 22
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 61.420903506165345,
+      "z": 22
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 48.21416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 60.91416353969642,
+      "z": 29.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 48.21416353969642,
+      "z": 37
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 60.91416353969642,
+      "z": 37
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 48.72090350616535,
+      "z": 44.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 61.420903506165345,
+      "z": 44.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 49.699849947815736,
+      "z": 52
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 62.39984994781573,
+      "z": 52
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 51.0842892824346,
+      "z": 59.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 63.78428928243459,
+      "z": 59.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 52.779874257261824,
+      "z": 67
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 65.47987425726183,
+      "z": 67
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 54.67105355834961,
+      "z": 74.5
+    },
+    {
+      "block": "east",
+      "level": 2,
+      "x": 67.3710535583496,
+      "z": 74.5
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -45,
+      "z": 132.14334319526628
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -45,
+      "z": 144.84334319526627
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -37.5,
+      "z": 130.77037721893493
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -37.5,
+      "z": 143.4703772189349
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -30,
+      "z": 129.64704142011834
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -30,
+      "z": 142.34704142011833
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -22.5,
+      "z": 128.77333579881656
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -22.5,
+      "z": 141.47333579881655
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -15,
+      "z": 128.14926035502958
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -15,
+      "z": 140.84926035502957
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -7.5,
+      "z": 127.7748150887574
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": -7.5,
+      "z": 140.4748150887574
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 7.5,
+      "z": 127.7748150887574
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 7.5,
+      "z": 140.4748150887574
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 15,
+      "z": 128.14926035502958
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 15,
+      "z": 140.84926035502957
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 22.5,
+      "z": 128.77333579881656
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 22.5,
+      "z": 141.47333579881655
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 30,
+      "z": 129.64704142011834
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 30,
+      "z": 142.34704142011833
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 37.5,
+      "z": 130.77037721893493
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 37.5,
+      "z": 143.4703772189349
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 45,
+      "z": 132.14334319526628
+    },
+    {
+      "block": "rear",
+      "level": 0,
+      "x": 45,
+      "z": 144.84334319526627
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -45,
+      "z": 132.14334319526628
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -45,
+      "z": 144.84334319526627
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -37.5,
+      "z": 130.77037721893493
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -37.5,
+      "z": 143.4703772189349
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -30,
+      "z": 129.64704142011834
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -30,
+      "z": 142.34704142011833
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -22.5,
+      "z": 128.77333579881656
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -22.5,
+      "z": 141.47333579881655
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -15,
+      "z": 128.14926035502958
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -15,
+      "z": 140.84926035502957
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -7.5,
+      "z": 127.7748150887574
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": -7.5,
+      "z": 140.4748150887574
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 0,
+      "z": 127.65
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 0,
+      "z": 140.35
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 7.5,
+      "z": 127.7748150887574
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 7.5,
+      "z": 140.4748150887574
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 15,
+      "z": 128.14926035502958
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 15,
+      "z": 140.84926035502957
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 22.5,
+      "z": 128.77333579881656
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 22.5,
+      "z": 141.47333579881655
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 30,
+      "z": 129.64704142011834
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 30,
+      "z": 142.34704142011833
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 37.5,
+      "z": 130.77037721893493
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 37.5,
+      "z": 143.4703772189349
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 45,
+      "z": 132.14334319526628
+    },
+    {
+      "block": "rear",
+      "level": 1,
+      "x": 45,
+      "z": 144.84334319526627
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -45,
+      "z": 132.14334319526628
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -45,
+      "z": 144.84334319526627
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -37.5,
+      "z": 130.77037721893493
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -37.5,
+      "z": 143.4703772189349
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -30,
+      "z": 129.64704142011834
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -30,
+      "z": 142.34704142011833
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -22.5,
+      "z": 128.77333579881656
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -22.5,
+      "z": 141.47333579881655
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -15,
+      "z": 128.14926035502958
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -15,
+      "z": 140.84926035502957
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -7.5,
+      "z": 127.7748150887574
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": -7.5,
+      "z": 140.4748150887574
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 0,
+      "z": 127.65
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 0,
+      "z": 140.35
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 7.5,
+      "z": 127.7748150887574
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 7.5,
+      "z": 140.4748150887574
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 15,
+      "z": 128.14926035502958
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 15,
+      "z": 140.84926035502957
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 22.5,
+      "z": 128.77333579881656
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 22.5,
+      "z": 141.47333579881655
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 30,
+      "z": 129.64704142011834
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 30,
+      "z": 142.34704142011833
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 37.5,
+      "z": 130.77037721893493
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 37.5,
+      "z": 143.4703772189349
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 45,
+      "z": 132.14334319526628
+    },
+    {
+      "block": "rear",
+      "level": 2,
+      "x": 45,
+      "z": 144.84334319526627
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "geometryFinite": true,
+  "hotelRoomBays": 220,
+  "villaBuildings": 18,
+  "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "errors": [],
+  "views": {
+    "overview": {
+      "triangles": 490878,
+      "drawCalls": 2522
+    },
+    "masterplan": {
+      "triangles": 490878,
+      "drawCalls": 2522
+    },
+    "hotel-detail": {
+      "triangles": 268788,
+      "drawCalls": 957
+    },
+    "villa-detail": {
+      "triangles": 99612,
+      "drawCalls": 175
+    },
+    "club-detail": {
+      "triangles": 274754,
+      "drawCalls": 839
+    },
+    "reception-detail": {
+      "triangles": 205702,
+      "drawCalls": 710
+    }
+  },
+  "bounds": {
+    "min": [
+      -260.0499572753906,
+      -2.200000047683716,
+      -285
+    ],
+    "max": [
+      260.0499572753906,
+      14.850000381469727,
+      181
+    ]
+  }
+}
